@@ -21,6 +21,9 @@ import frc.robot.commands.Autos;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.KitBot;
+import com.pathplanner.lib.auto.AutoBuilder;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -40,7 +43,14 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final KitBot kitBot = new KitBot();
+
+    // Path Follower
+    private final SendableChooser<Command> autoChooser;
+
+
     public RobotContainer() {
+        autoChooser = AutoBuilder.buildAutoChooser("Tests");
+        SmartDashboard.putData("Auto Mode", autoChooser);
         configureBindings();
     }
 
@@ -84,6 +94,6 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return Autos.kitBotAuto(drivetrain, kitBot, drive);
+        return autoChooser.getSelected();
     }
 }
