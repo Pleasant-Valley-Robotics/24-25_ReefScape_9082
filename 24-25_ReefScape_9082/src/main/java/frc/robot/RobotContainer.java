@@ -45,12 +45,12 @@ public class RobotContainer {
     public final KitBot kitBot = new KitBot();
 
     // Path Follower
-    private final SendableChooser<Command> autoChooser;
+//    private final SendableChooser<Command> autoChooser;
 
 
     public RobotContainer() {
-        autoChooser = AutoBuilder.buildAutoChooser("Tests");
-        SmartDashboard.putData("Auto Mode", autoChooser);
+//        autoChooser = AutoBuilder.buildAutoChooser("Tests");
+//        SmartDashboard.putData("Auto Mode", autoChooser);
         configureBindings();
     }
 
@@ -94,6 +94,8 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
+//        return autoChooser.getSelected();
+        return Autos.kitBotAuto(drivetrain, kitBot, drive);
+
     }
 }
