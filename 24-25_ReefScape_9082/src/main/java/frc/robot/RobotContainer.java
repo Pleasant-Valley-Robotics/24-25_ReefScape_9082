@@ -77,6 +77,9 @@ public class RobotContainer {
             if (joystick2.getRawButton(1)){
                 kitBot.shoot();
             }
+            else{
+                kitBot.stop();
+            }
         }, kitBot));
     }
 

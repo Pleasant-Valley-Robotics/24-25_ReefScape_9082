@@ -33,6 +33,8 @@ public class KitBot extends SubsystemBase {
   }
   public void shoot() {
     shooter.set(1);
-
+  }
+  public void stop() {
+    shooter.set(0);
   }
 }
