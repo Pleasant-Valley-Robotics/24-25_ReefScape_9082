@@ -8,10 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.*;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.*;
-import com.revrobotics.config.*;
 import com.revrobotics.spark.SparkBase.*;
 import com.revrobotics.spark.config.SparkBaseConfig.*;
-import com.revrobotics.RelativeEncoder;
 import frc.robot.Constants.kitBotConstants;
 
 public class KitBot extends SubsystemBase {
@@ -33,6 +31,9 @@ public class KitBot extends SubsystemBase {
   }
   public void shoot() {
     shooter.set(1);
+  }
+  public void shootVoltage(double voltage) {
+    shooter.setVoltage(voltage);
   }
   public void stop() {
     shooter.set(0);
