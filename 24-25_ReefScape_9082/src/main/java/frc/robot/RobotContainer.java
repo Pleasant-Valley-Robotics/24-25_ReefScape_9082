@@ -11,17 +11,18 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.Autos;
+import frc.robot.commands.KitBotShoot;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.KitBot;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -45,12 +46,13 @@ public class RobotContainer {
     public final KitBot kitBot = new KitBot();
 
     // Path Follower
-//    private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> autoChooser;
 
 
     public RobotContainer() {
-//        autoChooser = AutoBuilder.buildAutoChooser("Tests");
-//        SmartDashboard.putData("Auto Mode", autoChooser);
+        NamedCommands.registerCommand("KitBotShoot", new KitBotShoot(12, 3, kitBot));
+        autoChooser = AutoBuilder.buildAutoChooser("DumpCoralAuto");
+        SmartDashboard.putData("Auto Mode", autoChooser);
         configureBindings();
     }
 
@@ -94,8 +96,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-//        return autoChooser.getSelected();
-        return Autos.kitBotAuto(drivetrain, kitBot, drive);
+        return autoChooser.getSelected();
 
     }
 }
