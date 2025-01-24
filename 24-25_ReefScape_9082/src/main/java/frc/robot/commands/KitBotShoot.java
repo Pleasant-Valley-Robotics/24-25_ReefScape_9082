@@ -28,7 +28,9 @@ public class KitBotShoot extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    kitBot.stop();
+    kitBot.shootVoltage(0);
+    timer.reset();
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -40,7 +42,7 @@ public class KitBotShoot extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    kitBot.stop();
+    kitBot.shootVoltage(0);
   }
 
   // Returns true when the command should end.

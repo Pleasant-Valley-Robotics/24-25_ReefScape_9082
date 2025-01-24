@@ -87,7 +87,7 @@ public class RobotContainer {
         
         kitBot.setDefaultCommand(new RunCommand(()-> {
             if (joystick2.getRawButton(1)){
-                kitBot.shoot();
+                kitBot.shootVoltage(12);
             }
             else{
                 kitBot.stop();
