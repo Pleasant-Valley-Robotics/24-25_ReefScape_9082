@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BritneyCoralWall"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "KitBotShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BritneyHumanPlayerStation"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
