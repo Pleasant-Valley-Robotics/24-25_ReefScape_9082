@@ -51,7 +51,7 @@ public class RobotContainer {
 
     public RobotContainer() {
         NamedCommands.registerCommand("KitBotShoot", new KitBotShoot(12, 3, kitBot));
-        autoChooser = AutoBuilder.buildAutoChooser("Britney Autos");
+        autoChooser = AutoBuilder.buildAutoChooser("Britney Auto");
         SmartDashboard.putData("Auto Mode", autoChooser);
         configureBindings();
     }
