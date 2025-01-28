@@ -20,6 +20,8 @@ import frc.robot.commands.KitBotShoot;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.KitBot;
+import frc.robot.subsystems.UtilitySensors;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -44,6 +46,7 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final KitBot kitBot = new KitBot();
+    public final UtilitySensors utilitySensors = new UtilitySensors();
 
     // Path Follower
     private final SendableChooser<Command> autoChooser;
