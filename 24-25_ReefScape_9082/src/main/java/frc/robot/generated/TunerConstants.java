@@ -10,6 +10,7 @@ import com.ctre.phoenix6.swerve.*;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants.*;
 
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.units.measure.*;
@@ -170,7 +171,8 @@ public class TunerConstants {
     private static final Distance kBackRightYPos = Inches.of(-12.625);
 
     //Standard Deviation arrays
-    public Matrix<N3,N1> odometryStd;
+    private static final Matrix<N3,N1> odometryStd = VecBuilder.fill(0.5,0.5,0.2);
+    private static final Matrix<N3,N1> visionStd = VecBuilder.fill(0.1,0.1,999999);
 
 
     public static final SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> FrontLeft =
@@ -200,7 +202,7 @@ public class TunerConstants {
      */
     public static CommandSwerveDrivetrain createDrivetrain() {
         return new CommandSwerveDrivetrain(
-            DrivetrainConstants, 440,odometryStd, odometryStd,FrontLeft, FrontRight, BackLeft, BackRight
+            DrivetrainConstants, 440,odometryStd, visionStd,FrontLeft, FrontRight, BackLeft, BackRight
         );
     }
 
