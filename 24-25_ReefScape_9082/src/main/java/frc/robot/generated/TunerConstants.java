@@ -169,6 +169,9 @@ public class TunerConstants {
     private static final Distance kBackRightXPos = Inches.of(-18.4545);
     private static final Distance kBackRightYPos = Inches.of(-12.625);
 
+    //Standard Deviation arrays
+    public Matrix<N3,N1> odometryStd;
+
 
     public static final SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> FrontLeft =
         ConstantCreator.createModuleConstants(
@@ -197,7 +200,7 @@ public class TunerConstants {
      */
     public static CommandSwerveDrivetrain createDrivetrain() {
         return new CommandSwerveDrivetrain(
-            DrivetrainConstants, 440, FrontLeft, FrontRight, BackLeft, BackRight
+            DrivetrainConstants, 440,odometryStd, odometryStd,FrontLeft, FrontRight, BackLeft, BackRight
         );
     }
 
