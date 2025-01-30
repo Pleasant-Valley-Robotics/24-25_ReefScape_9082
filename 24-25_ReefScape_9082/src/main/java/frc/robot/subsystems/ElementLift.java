@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.*;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -16,7 +17,8 @@ import frc.robot.Constants.elementLiftConstants;
 public class ElementLift extends SubsystemBase {
 
   private final SparkMax elementLift = new SparkMax(elementLiftConstants.elementLiftCAN, MotorType.kBrushed);
-  SparkMaxConfig elementLiftConfig = new SparkMaxConfig();
+  private SparkMaxConfig elementLiftConfig = new SparkMaxConfig();
+  private PIDController elementLiftController = new PIDController(0,0,0);
   
   /** Creates a new ElementLift. */
   public ElementLift() {
@@ -29,13 +31,19 @@ public class ElementLift extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void lift(double speed){
+  public void setSpeed(double speed){
     elementLift.set(speed);
   }
-  public void liftVoltage(double voltage){
+  public void setVoltage(double voltage){
     elementLift.setVoltage(voltage);
   }
-  public double getSetSpeed(){
+  public void setPIDGains(double P, double I, double D){
+    elementLiftController.setPID(P,I,D);
+  }
+  public void goToHeight(double height){
+    elementLift.setVoltage(elementLiftController.calculate(elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches,height));
+  }
+  public double getSpeed(){
     return elementLift.get();
   }
   public double getAppliedOutput(){
@@ -44,4 +52,5 @@ public class ElementLift extends SubsystemBase {
   public double getEncoderVelocity(){
     return elementLift.getEncoder().getVelocity();
   }
+
 }

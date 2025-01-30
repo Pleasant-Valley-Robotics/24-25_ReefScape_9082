@@ -70,7 +70,7 @@ public class RobotContainer {
         );
         
         elementLift.setDefaultCommand(new RunCommand(()->{
-            elementLift.lift(-joystick2.getY());
+            elementLift.set(-joystick2.getY());
         }));
 
 
