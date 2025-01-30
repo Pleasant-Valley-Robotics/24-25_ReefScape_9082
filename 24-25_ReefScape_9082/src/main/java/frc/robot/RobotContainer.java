@@ -16,10 +16,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.KitBotShoot;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.KitBot;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -43,14 +41,12 @@ public class RobotContainer {
     private final Joystick joystick2 = new Joystick(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    public final KitBot kitBot = new KitBot();
 
     // Path Follower
     private final SendableChooser<Command> autoChooser;
 
 
     public RobotContainer() {
-        NamedCommands.registerCommand("KitBotShoot", new KitBotShoot(6, 1, kitBot));
         autoChooser = AutoBuilder.buildAutoChooser("Britney Auto");
         SmartDashboard.putData("Auto Mode", autoChooser);
         configureBindings();
@@ -85,14 +81,6 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
         
-        kitBot.setDefaultCommand(new RunCommand(()-> {
-            if (joystick2.getRawButton(1)){
-                kitBot.shootVoltage(12);
-            }
-            else{
-                kitBot.stop();
-            }
-        }, kitBot));
     }
 
     public Command getAutonomousCommand() {
