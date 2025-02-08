@@ -16,7 +16,7 @@ import frc.robot.Constants.elementLiftConstants;
 
 public class ElementLift extends SubsystemBase {
 
-  private final SparkMax elementLift = new SparkMax(elementLiftConstants.elementLiftCAN, MotorType.kBrushed);
+  private final SparkMax elementLift = new SparkMax(elementLiftConstants.elementLiftCAN, MotorType.kBrushless);
   private SparkMaxConfig elementLiftConfig = new SparkMaxConfig();
   private PIDController elementLiftController = new PIDController(0,0,0);
   
