@@ -75,6 +75,7 @@ public class RobotContainer {
         elementLift.setDefaultCommand(new RunCommand(()->{
             elementLift.setSpeed(-joystick2.getY());
         }, elementLift));
+        utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
 
 
         //Joystick 1 button bindings:

@@ -29,8 +29,10 @@ public class UtilitySensors extends SubsystemBase {
   * Inspired by https://github.com/GirlsOfSteelRobotics/Docs/wiki/LIDAR-Lite-Distance-Sensor
   */
   private Counter LIDAR;
-  final double offsetLIDAR  = 10; //offset for sensor. test with tape measure <-- note from Brandon: I don't know how to do this. This came from sample code, I hope it's right
+  final double offsetLIDAR  = 10; // for some reason, doesn't work in the 45-55 cm range, it becomes about 4 instead
   double distanceLIDAR = 0;
+  private final double[] readings = new double[10];
+  private int currentReading = 0;
 
 
   /** Creates a new UtilitySensors. */
@@ -59,12 +61,24 @@ public class UtilitySensors extends SubsystemBase {
     SmartDashboard.putNumber("NavX2-MXP Refresh Rate", refreshRate);
 
     //LIDAR Periodic
+    double reading;
     if(LIDAR.get() < 1){
-      distanceLIDAR = 0;
+      reading = 0;
     }
     else{
-      distanceLIDAR = (LIDAR.getPeriod()*1000000.0/10.0) - offsetLIDAR; //convert to distance. sensor is high 10 us for every centimeter. 
+      reading = (LIDAR.getPeriod()*1000000.0/10.0) - offsetLIDAR; //convert to distance. sensor is high 10 us for every centimeter. 
+      // distanceLIDAR = Math.round(distanceLIDAR * 10) / 10;
     }
+    readings[currentReading++] = reading;
+    currentReading %= readings.length;
+
+    distanceLIDAR = 0;
+    for (int i=0; i<10; i++) {
+      distanceLIDAR += readings[i];
+    }
+    distanceLIDAR /= 10.0;
+    distanceLIDAR = Math.round(distanceLIDAR * 10.0) / 10.0;
+
     SmartDashboard.putNumber("Distance", distanceLIDAR); //put the distance on the dashboard
 
   }
