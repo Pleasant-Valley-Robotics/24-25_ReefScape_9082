@@ -19,5 +19,6 @@ public final class Constants {
   public static class elementLiftConstants {
     public static final int elementLiftCAN = 52;
     public static final double encoderToInches = 1; //This needs calculated based on our lift
+    public static final double liftOffset = 
   }
 }
