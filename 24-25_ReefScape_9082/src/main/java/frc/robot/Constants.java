@@ -16,7 +16,8 @@ public final class Constants {
   public static class operatorConstants {
     public static final int driverControllerPort = 0;
   }
-  public static class kitBotConstants {
-    public static final int kitBotShooterCAN = 51;
+  public static class elementLiftConstants {
+    public static final int elementLiftCAN = 52;
+    public static final double encoderToInches = 1; //This needs calculated based on our lift
   }
 }

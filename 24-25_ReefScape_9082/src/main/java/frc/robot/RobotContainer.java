@@ -16,10 +16,12 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.KitBotShoot;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.KitBot;
+import frc.robot.subsystems.ElementLift;
+
+import frc.robot.subsystems.UtilitySensors;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -43,22 +45,24 @@ public class RobotContainer {
     private final Joystick joystick2 = new Joystick(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    public final KitBot kitBot = new KitBot();
+
+    public final ElementLift elementLift = new ElementLift();
+    public final UtilitySensors utilitySensors = new UtilitySensors();
 
     // Path Follower
     private final SendableChooser<Command> autoChooser;
 
 
     public RobotContainer() {
-        NamedCommands.registerCommand("KitBotShoot", new KitBotShoot(12, 3, kitBot));
         autoChooser = AutoBuilder.buildAutoChooser("Britney Auto");
         SmartDashboard.putData("Auto Mode", autoChooser);
+        drivetrain.registerTelemetry(logger::telemeterize);
         configureBindings();
     }
 
     private void configureBindings() {
-        // Note that X is defined as forward according to WPILib convention,
-        // and Y is defined as to the left according to WPILib convention.
+        
+        //Subsystem Default Commands        
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
@@ -68,11 +72,16 @@ public class RobotContainer {
             )
         );
         
-        joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        joystick.b().whileTrue(drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
-        ));
+        elementLift.setDefaultCommand(new RunCommand(()->{
+            elementLift.setSpeed(-joystick2.getY());
+        }, elementLift));
+        utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
 
+
+        //Joystick 1 button bindings:
+        joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        joystick.b().whileTrue(drivetrain.applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
+        
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
         //joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
@@ -80,19 +89,12 @@ public class RobotContainer {
         //joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         //joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-        // reset the field-centric heading on left bumper press
+        // Reset the field-centric heading on left bumper press
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
-        drivetrain.registerTelemetry(logger::telemeterize);
+
         
-        kitBot.setDefaultCommand(new RunCommand(()-> {
-            if (joystick2.getRawButton(1)){
-                kitBot.shootVoltage(12);
-            }
-            else{
-                kitBot.stop();
-            }
-        }, kitBot));
+        
     }
 
     public Command getAutonomousCommand() {
