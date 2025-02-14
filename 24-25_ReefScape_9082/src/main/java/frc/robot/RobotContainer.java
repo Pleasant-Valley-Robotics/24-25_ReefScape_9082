@@ -24,6 +24,7 @@ import frc.robot.subsystems.ElementLift;
 import frc.robot.subsystems.UtilitySensors;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 
 
@@ -47,6 +48,7 @@ public class RobotContainer {
     public final ElementLift elementLift = new ElementLift();
     public final UtilitySensors utilitySensors = new UtilitySensors();
     public final CoralEndEffector coralEE = new CoralEndEffector();
+    public final PathPlannerAuto L4CoralLTeleOpAutomation = new PathPlannerAuto("L4CoralLTeleOpAutomation");
 
     // Path Follower
     private final SendableChooser<Command> autoChooser;
@@ -113,6 +115,7 @@ public class RobotContainer {
         //Joystick 1 button bindings:
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
+        joystick.x().whileTrue(L4CoralLTeleOpAutomation);
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
