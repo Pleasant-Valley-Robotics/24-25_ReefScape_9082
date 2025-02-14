@@ -71,7 +71,10 @@ public class RobotContainer {
             )
         );
         
+        //Element Lift handling
         elementLift.setDefaultCommand(new RunCommand(()->{
+
+            //The higher the if statement, the higher the priority
             if(joystick2.getRawButton(7)){
                 elementLift.goToHeight(18.0);   //To Score on L1(trough)
             }
@@ -85,21 +88,20 @@ public class RobotContainer {
                 elementLift.goToHeight(72.0);   //Score on L4
             }
             else if(joystick2.getRawButton(12)){
-                elementLift.resetEncoder();
+                elementLift.resetEncoder(); //Set the encoder position to 0
             }
-            else{
-            elementLift.setSpeed(-joystick2.getY());
+            else{   //If we are not using another higher priority command
+                if(Math.abs(joystick2.getY()) > 0.05){  //Joystick deadzone of 0.05
+                    elementLift.setSpeed(-joystick2.getY());    //Set power directly to the lift via the joystick y axis
+                }
             }
         }, elementLift));
         utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
-
 
         //Joystick 1 button bindings:
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
 
-
-        
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
         //joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
@@ -109,14 +111,9 @@ public class RobotContainer {
 
         // Reset the field-centric heading on left bumper press
         joystick.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-
-
-        
-        
     }
 
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
-
     }
 }

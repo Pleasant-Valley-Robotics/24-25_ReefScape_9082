@@ -45,13 +45,18 @@ public class ElementLift extends SubsystemBase {
     elementLiftController.setPID(P,I,D);
   }
   public void goToHeight(double height){
-    height = height - elementLiftConstants.liftOffset;
-    double voltage = elementLiftController.calculate(elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches,height);
+    height = height - elementLiftConstants.liftOffset;  //Compensate for the height between the lift start position and the floor
+    double voltage = elementLiftController.calculate(elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches, height);
   
-    //This logic is used for clamping, but we need to consider negatives. a min/max function may not be ideal here, or we need to use absolutes or other logic...
-  //  voltage = Math.min(elementLiftConstants.liftMaxVoltage, voltage);
-  //  voltage = Math.max(elementLiftConstants.liftMinVoltage, voltage);
-    elementLift.setVoltage(voltage);
+    //This logic is used for clamping
+    if (Math.abs(voltage) < elementLiftConstants.liftMinVoltage){
+      voltage = (voltage/Math.abs(voltage))*elementLiftConstants.liftMinVoltage;
+    }
+    else if (Math.abs(voltage) > elementLiftConstants.liftMaxVoltage){
+      voltage = (voltage/Math.abs(voltage))*elementLiftConstants.liftMaxVoltage;
+    }
+
+    elementLift.setVoltage(voltage);  //Actually drive the lift with set voltage
   }
   public double getSpeed(){
     return elementLift.get();
