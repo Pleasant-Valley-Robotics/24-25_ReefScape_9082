@@ -5,28 +5,26 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
-
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.commands.CoralEEAutoOuttake;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.CoralEndEffector;
 import frc.robot.subsystems.ElementLift;
-
 import frc.robot.subsystems.UtilitySensors;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class RobotContainer {
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -45,7 +43,6 @@ public class RobotContainer {
     private final Joystick joystick2 = new Joystick(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-
     public final ElementLift elementLift = new ElementLift();
     public final UtilitySensors utilitySensors = new UtilitySensors();
     public final CoralEndEffector coralEE = new CoralEndEffector();
@@ -55,6 +52,7 @@ public class RobotContainer {
 
 
     public RobotContainer() {
+        NamedCommands.registerCommand("CoralEEAutoOuttake", new CoralEEAutoOuttake(coralEE, 2.0, 3.0));
         autoChooser = AutoBuilder.buildAutoChooser("Britney Auto");
         SmartDashboard.putData("Auto Mode", autoChooser);
         drivetrain.registerTelemetry(logger::telemeterize);
