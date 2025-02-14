@@ -58,4 +58,10 @@ public final class Constants {
     public static final double liftMinVoltage = 0.1;
     
   }
+  /*
+   * Coral End Effector Constants
+   */
+  public static class coralEEConstants{
+    public static final int coralEECAN = 53;
+  }
 }

@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.CoralEndEffector;
 import frc.robot.subsystems.ElementLift;
 
 import frc.robot.subsystems.UtilitySensors;
@@ -47,6 +48,7 @@ public class RobotContainer {
 
     public final ElementLift elementLift = new ElementLift();
     public final UtilitySensors utilitySensors = new UtilitySensors();
+    public final CoralEndEffector coralEE = new CoralEndEffector();
 
     // Path Follower
     private final SendableChooser<Command> autoChooser;
@@ -92,11 +94,17 @@ public class RobotContainer {
             }
             else{   //If we are not using another higher priority command
                 if(Math.abs(joystick2.getY()) > 0.05){  //Joystick deadzone of 0.05
-                    elementLift.setSpeed(-joystick2.getY());    //Set power directly to the lift via the joystick y axis
+                    elementLift.setVoltage(-joystick2.getY()*12);    //Set power directly to the lift via the joystick y axis
                 }
             }
         }, elementLift));
         utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
+
+        coralEE.setDefaultCommand(new RunCommand(() -> {
+            if (joystick2.getRawButton(1)){
+                coralEE.setVoltage(2.0);
+            }
+        }, coralEE));
 
         //Joystick 1 button bindings:
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
