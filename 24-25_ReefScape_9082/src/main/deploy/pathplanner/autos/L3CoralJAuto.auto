@@ -17,12 +17,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "CoralEEAutoOuttake"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [

@@ -19,7 +19,7 @@ public class ElementLift extends SubsystemBase {
 
   private final SparkMax elementLift = new SparkMax(elementLiftConstants.elementLiftCAN, MotorType.kBrushless);
   private SparkMaxConfig elementLiftConfig = new SparkMaxConfig();
-  private PIDController elementLiftController = new PIDController(.5,0,0);
+  private PIDController elementLiftController = new PIDController(elementLiftConstants.liftP,elementLiftConstants.liftI,elementLiftConstants.liftD);
   
   /** Creates a new ElementLift. */
   public ElementLift() {
@@ -28,6 +28,7 @@ public class ElementLift extends SubsystemBase {
     .idleMode(IdleMode.kBrake);
   elementLift.configure(elementLiftConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   elementLiftController.setTolerance(0.25);
+  this.setPIDGains(elementLiftConstants.liftP,elementLiftConstants.liftI,elementLiftConstants.liftD);
   }
 
   @Override
@@ -50,13 +51,20 @@ public class ElementLift extends SubsystemBase {
     double voltage = elementLiftController.calculate(elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches, height);
   
     //This logic is used for clamping
-    if (Math.abs(voltage) < elementLiftConstants.liftMinVoltage){
+    if(height > 60){
+      if(Math.abs(voltage) < elementLiftConstants.liftMinVoltage+1.375){
+      voltage = (voltage/Math.abs(voltage))*(elementLiftConstants.liftMinVoltage+1.375);
+      }
+    }  
+    else if (Math.abs(voltage) < elementLiftConstants.liftMinVoltage){
       voltage = (voltage/Math.abs(voltage))*elementLiftConstants.liftMinVoltage;
     }
-    else if (Math.abs(voltage) > elementLiftConstants.liftMaxVoltage){
+
+    if (Math.abs(voltage) > elementLiftConstants.liftMaxVoltage){
       voltage = (voltage/Math.abs(voltage))*elementLiftConstants.liftMaxVoltage;
     }
-
+    SmartDashboard.putNumber("Lift PID Voltage", voltage);
+    SmartDashboard.putNumber("Lift Accumulated Error", elementLiftController.getAccumulatedError());
     elementLift.setVoltage(voltage);  //Actually drive the lift with set voltage
   }
   public boolean atSetPoint(){
@@ -70,6 +78,9 @@ public class ElementLift extends SubsystemBase {
   }
   public double getEncoderVelocity(){
     return elementLift.getEncoder().getVelocity();
+  }
+  public double getEncoderPosition(){
+    return elementLift.getEncoder().getPosition();
   }
   public void resetEncoder(){
     elementLift.getEncoder().setPosition(0);

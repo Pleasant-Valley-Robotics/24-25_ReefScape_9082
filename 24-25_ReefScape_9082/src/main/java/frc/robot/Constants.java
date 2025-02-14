@@ -39,12 +39,12 @@ public final class Constants {
      * i.e. we want to be going at 2V when we are 12 inches away, we would have 2V/12in
      * Which equates to 1V / 6 inches of error
      */
-    public static final double liftP = 1/12;
+    public static final double liftP = 1.0/2.0;
     /*
      * an Integral Gain value would account for gravity pulling the lift down beyond what the motor is supplying voltage for
      * i.e. steady state error
      */
-    public static final double liftI = 0;
+    public static final double liftI = 0.0;
 
     /*
      * We need to research the value of Derivative Gain and how we would apply it here, if at all.
@@ -52,11 +52,14 @@ public final class Constants {
     public static final double liftD = 0;
 
     //The maximum voltage that the element lift can have during a PID Controlled system
-    public static final double liftMaxVoltage = 6;
+    public static final double liftMaxVoltage = 6.0;
 
     //The minimum voltage that the element lift can have during a PID Controlled system
-    public static final double liftMinVoltage = 0.1;
+    public static final double liftMinVoltage = 1.5;
     
+    public static final double liftMaxEncoder = 76.5;
+
+    public static final double liftMinEncoder = -10.0;
   }
   /*
    * Coral End Effector Constants

@@ -5,6 +5,9 @@
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
+
+import java.util.Queue;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -12,9 +15,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.Constants.elementLiftConstants;
 import frc.robot.commands.CoralEEAutoOuttake;
 import frc.robot.commands.ElementLiftAutoHeight;
 import frc.robot.generated.TunerConstants;
@@ -46,7 +51,7 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final ElementLift elementLift = new ElementLift();
-    public final UtilitySensors utilitySensors = new UtilitySensors();
+    //public final UtilitySensors utilitySensors = new UtilitySensors();
     public final CoralEndEffector coralEE = new CoralEndEffector();
     public final PathPlannerAuto L4CoralLTeleOpAutomation = new PathPlannerAuto("L4CoralLTeleOpAutomation");
 
@@ -81,30 +86,22 @@ public class RobotContainer {
         
         //Element Lift handling
         elementLift.setDefaultCommand(new RunCommand(()->{
-
-            //The higher the if statement, the higher the priority
-            if(joystick2.getRawButton(7)){
-                elementLift.goToHeight(18.0);   //To Score on L1(trough)
-            }
-            else if(joystick2.getRawButton(8)){
-                elementLift.goToHeight(32.0);   //Score on L2
-            }
-            else if(joystick2.getRawButton(9)){
-                elementLift.goToHeight(48.0);   //Score on L3
-            }
-            else if(joystick2.getRawButton(10)){
-                elementLift.goToHeight(72.0);   //Score on L4
-            }
-            else if(joystick2.getRawButton(12)){
-                elementLift.resetEncoder(); //Set the encoder position to 0
-            }
-            else{   //If we are not using another higher priority command
-                if(Math.abs(joystick2.getY()) > 0.05){  //Joystick deadzone of 0.05
-                    elementLift.setVoltage(-joystick2.getY()*12);    //Set power directly to the lift via the joystick y axis
+            if(Math.abs(joystick2.getY()) > 0.065){  //Joystick deadzone of 0.05
+                if(elementLift.getEncoderPosition() < elementLiftConstants.liftMinEncoder){
+                    elementLift.setVoltage(1);
+                }
+                else if(elementLift.getEncoderPosition() > elementLiftConstants.liftMaxEncoder){
+                    elementLift.setVoltage(-1);
+                }
+                else{
+                elementLift.setVoltage(-joystick2.getY()*12);    //Set power directly to the lift via the joystick y axis
                 }
             }
+            else{
+                elementLift.setVoltage(0);
+            }
         }, elementLift));
-        utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
+        //utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
 
         coralEE.setDefaultCommand(new RunCommand(() -> {
             if (joystick2.getRawButton(1)){
@@ -116,6 +113,12 @@ public class RobotContainer {
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
         //joystick.x().whileTrue(L4CoralLTeleOpAutomation);
+        new JoystickButton(joystick2, 7).whileTrue(new ElementLiftAutoHeight(elementLift, 18.0).repeatedly());
+        new JoystickButton(joystick2, 8).whileTrue(new ElementLiftAutoHeight(elementLift, 32.0).repeatedly());
+        new JoystickButton(joystick2, 9).whileTrue(new ElementLiftAutoHeight(elementLift, 48.0).repeatedly());
+        new JoystickButton(joystick2, 10).whileTrue(new ElementLiftAutoHeight(elementLift, 72.0).repeatedly());
+        new JoystickButton(joystick2, 11).whileTrue(L4CoralLTeleOpAutomation);
+        //new JoystickButton(joystick2, 12).whileTrue(new RunCommand(()-> {elementLift.resetEncoder();}));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
