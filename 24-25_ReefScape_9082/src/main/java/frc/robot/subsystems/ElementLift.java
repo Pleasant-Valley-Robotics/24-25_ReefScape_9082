@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.*;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -18,7 +19,7 @@ public class ElementLift extends SubsystemBase {
 
   private final SparkMax elementLift = new SparkMax(elementLiftConstants.elementLiftCAN, MotorType.kBrushless);
   private SparkMaxConfig elementLiftConfig = new SparkMaxConfig();
-  private PIDController elementLiftController = new PIDController(0,0,0);
+  private PIDController elementLiftController = new PIDController(.5,0,0);
   
   /** Creates a new ElementLift. */
   public ElementLift() {
@@ -30,6 +31,8 @@ public class ElementLift extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Lift Encoder Value", -elementLift.getEncoder().getPosition());
+    SmartDashboard.putNumber("Lift Height", (-elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches)+elementLiftConstants.liftOffset);
   }
   public void setSpeed(double speed){
     elementLift.set(speed);
@@ -41,6 +44,7 @@ public class ElementLift extends SubsystemBase {
     elementLiftController.setPID(P,I,D);
   }
   public void goToHeight(double height){
+    height = height - elementLiftConstants.liftOffset;
     elementLift.setVoltage(elementLiftController.calculate(elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches,height));
   }
   public double getSpeed(){
@@ -51,6 +55,9 @@ public class ElementLift extends SubsystemBase {
   }
   public double getEncoderVelocity(){
     return elementLift.getEncoder().getVelocity();
+  }
+  public void resetEncoder(){
+    elementLift.getEncoder().setPosition(0);
   }
 
 }

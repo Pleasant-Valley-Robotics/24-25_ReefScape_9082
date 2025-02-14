@@ -18,7 +18,20 @@ public final class Constants {
   }
   public static class elementLiftConstants {
     public static final int elementLiftCAN = 52;
-    public static final double encoderToInches = 1; //This needs calculated based on our lift
-    public static final double liftOffset = 
+
+    /*
+     * To calculate the encodersToInches, 
+     * 1. Measure the encoders of the lift in SmartDashboard
+     * 2. Start at 0 encoders
+     * 3. Drive the lift up to the maximum height
+     * 4. Write this encoder number down from SmartDashboard
+     * 5. Measure the distance from the ground to the current end-effector location on the lift
+     * 6. Subtract the distance from the ground to the initial height of the end-effector
+     * 7. Take the resulting distance and divide it by the measured encoders - this is the encoderToInches value
+     */
+    public static final double measuredDistance = 78;
+    public static final double measuredEncoders = 82.4;
+    public static final double liftOffset = 11.0;
+    public static final double encoderToInches = (measuredDistance - liftOffset)/measuredEncoders; //This needs calculated based on our lift, so drive the lift a set distance
   }
 }

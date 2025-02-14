@@ -73,7 +73,24 @@ public class RobotContainer {
         );
         
         elementLift.setDefaultCommand(new RunCommand(()->{
+            if(joystick2.getRawButton(7)){
+                elementLift.goToHeight(18.0);   //To Score on L1(trough)
+            }
+            else if(joystick2.getRawButton(8)){
+                elementLift.goToHeight(32.0);   //Score on L2
+            }
+            else if(joystick2.getRawButton(9)){
+                elementLift.goToHeight(48.0);   //Score on L3
+            }
+            else if(joystick2.getRawButton(10)){
+                elementLift.goToHeight(72.0);
+            }
+            else if(joystick2.getRawButton(12)){
+                elementLift.resetEncoder();
+            }
+            else{
             elementLift.setSpeed(-joystick2.getY());
+            }
         }, elementLift));
         utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
 
@@ -81,20 +98,6 @@ public class RobotContainer {
         //Joystick 1 button bindings:
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
-
-        //For shooting on coral. Ref video for coral heights, https://www.youtube.com/watch?v=U-Hhq4fZT4U&list=PLZT9pIgNOV6aMzMboyCYP9MdSFgfckvl9&index=3.  
-        joystick.button(7).whileTrue(new RunCommand(() ->{
-            elementLift.goToHeight(18.0); //To score on L1(trough). Inches.
-        }, elementLift)); 
-        joystick.button(8).whileTrue(new RunCommand(() -> {
-            elementLift.goToHeight(32.0); //To score on L2. Inches.
-        }, elementLift)); 
-        joystick.button(9).whileTrue(new RunCommand(() -> {
-            elementLift.goToHeight(48.0); //To score on L3. Inches.
-        }, elementLift)); 
-        joystick.button(10).whileTrue(new RunCommand(() -> {
-            elementLift.goToHeight(72.0); //To score on L4. Inches.
-        }, elementLift)); 
 
 
         
