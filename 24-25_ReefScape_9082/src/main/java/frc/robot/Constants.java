@@ -51,7 +51,11 @@ public final class Constants {
      */
     public static final double liftD = 0;
 
+    //The maximum voltage that the element lift can have during a PID Controlled system
     public static final double liftMaxVoltage = 6;
+
+    //The minimum voltage that the element lift can have during a PID Controlled system
+    public static final double liftMinVoltage = 0.1;
     
   }
 }
