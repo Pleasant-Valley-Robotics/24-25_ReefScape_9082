@@ -32,6 +32,26 @@ public final class Constants {
     public static final double measuredDistance = 78;
     public static final double measuredEncoders = 82.4;
     public static final double liftOffset = 11.0;
-    public static final double encoderToInches = (measuredDistance - liftOffset)/measuredEncoders; //This needs calculated based on our lift, so drive the lift a set distance
+    public static final double encoderToInches = (measuredDistance - liftOffset)/measuredEncoders;
+    /*
+     * Math for Proportional Gain:
+     * P = Desired Voltage / Desired Error
+     * i.e. we want to be going at 2V when we are 12 inches away, we would have 2V/12in
+     * Which equates to 1V / 6 inches of error
+     */
+    public static final double liftP = 1/12;
+    /*
+     * an Integral Gain value would account for gravity pulling the lift down beyond what the motor is supplying voltage for
+     * i.e. steady state error
+     */
+    public static final double liftI = 0;
+
+    /*
+     * We need to research the value of Derivative Gain and how we would apply it here, if at all.
+     */
+    public static final double liftD = 0;
+
+    public static final double liftMaxVoltage = 6;
+    
   }
 }

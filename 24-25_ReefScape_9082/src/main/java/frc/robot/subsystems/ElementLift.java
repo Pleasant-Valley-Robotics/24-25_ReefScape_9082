@@ -24,6 +24,7 @@ public class ElementLift extends SubsystemBase {
   /** Creates a new ElementLift. */
   public ElementLift() {
     elementLiftConfig
+    .inverted(true)
     .idleMode(IdleMode.kBrake);
   elementLift.configure(elementLiftConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
@@ -31,8 +32,8 @@ public class ElementLift extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Lift Encoder Value", -elementLift.getEncoder().getPosition());
-    SmartDashboard.putNumber("Lift Height", (-elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches)+elementLiftConstants.liftOffset);
+    SmartDashboard.putNumber("Lift Encoder Value", elementLift.getEncoder().getPosition());
+    SmartDashboard.putNumber("Lift Height", (elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches)+elementLiftConstants.liftOffset);
   }
   public void setSpeed(double speed){
     elementLift.set(speed);
@@ -45,7 +46,9 @@ public class ElementLift extends SubsystemBase {
   }
   public void goToHeight(double height){
     height = height - elementLiftConstants.liftOffset;
-    elementLift.setVoltage(elementLiftController.calculate(elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches,height));
+    double voltage = elementLiftController.calculate(elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches,height);
+    voltage = Math.min(elementLiftConstants.liftMaxVoltage, voltage);
+    elementLift.setVoltage(voltage);
   }
   public double getSpeed(){
     return elementLift.get();

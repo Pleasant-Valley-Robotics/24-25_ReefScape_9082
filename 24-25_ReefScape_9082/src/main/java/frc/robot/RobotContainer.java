@@ -83,7 +83,7 @@ public class RobotContainer {
                 elementLift.goToHeight(48.0);   //Score on L3
             }
             else if(joystick2.getRawButton(10)){
-                elementLift.goToHeight(72.0);
+                elementLift.goToHeight(72.0);   //Score on L4
             }
             else if(joystick2.getRawButton(12)){
                 elementLift.resetEncoder();
