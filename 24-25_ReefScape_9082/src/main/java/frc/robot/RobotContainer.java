@@ -115,7 +115,7 @@ public class RobotContainer {
         //Joystick 1 button bindings:
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
-        joystick.x().whileTrue(L4CoralLTeleOpAutomation);
+        //joystick.x().whileTrue(L4CoralLTeleOpAutomation);
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
