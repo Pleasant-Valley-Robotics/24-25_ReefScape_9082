@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.CoralEEAutoOuttake;
+import frc.robot.commands.ElementLiftAutoHeight;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.CoralEndEffector;
@@ -53,7 +54,12 @@ public class RobotContainer {
 
     public RobotContainer() {
         NamedCommands.registerCommand("CoralEEAutoOuttake", new CoralEEAutoOuttake(coralEE, 2.0, 3.0));
-        autoChooser = AutoBuilder.buildAutoChooser("Britney Auto");
+        NamedCommands.registerCommand("ElementLiftAutoHeightHumanPlayer", new ElementLiftAutoHeight(elementLift, 11.0));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL1", new ElementLiftAutoHeight(elementLift, 18.0));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL2", new ElementLiftAutoHeight(elementLift, 32.0));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL3", new ElementLiftAutoHeight(elementLift, 48.0));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL4", new ElementLiftAutoHeight(elementLift, 72.0));
+        autoChooser = AutoBuilder.buildAutoChooser("L4CoralJAuto");
         SmartDashboard.putData("Auto Mode", autoChooser);
         drivetrain.registerTelemetry(logger::telemeterize);
         configureBindings();

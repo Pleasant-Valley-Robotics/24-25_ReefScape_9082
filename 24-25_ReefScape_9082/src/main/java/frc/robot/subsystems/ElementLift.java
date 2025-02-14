@@ -27,6 +27,7 @@ public class ElementLift extends SubsystemBase {
     .inverted(true)
     .idleMode(IdleMode.kBrake);
   elementLift.configure(elementLiftConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+  elementLiftController.setTolerance(0.25);
   }
 
   @Override
@@ -57,6 +58,9 @@ public class ElementLift extends SubsystemBase {
     }
 
     elementLift.setVoltage(voltage);  //Actually drive the lift with set voltage
+  }
+  public boolean atSetPoint(){
+    return elementLiftController.atSetpoint();
   }
   public double getSpeed(){
     return elementLift.get();
