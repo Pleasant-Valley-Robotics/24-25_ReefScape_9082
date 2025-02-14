@@ -29,8 +29,8 @@ public final class Constants {
      * 6. Subtract the distance from the ground to the initial height of the end-effector
      * 7. Take the resulting distance and divide it by the measured encoders - this is the encoderToInches value
      */
-    public static final double measuredDistance = 78;
-    public static final double measuredEncoders = 82.4;
+    public static final double measuredDistance = 71.0;
+    public static final double measuredEncoders = 74.5;
     public static final double liftOffset = 11.0;
     public static final double encoderToInches = (measuredDistance - liftOffset)/measuredEncoders;
     /*

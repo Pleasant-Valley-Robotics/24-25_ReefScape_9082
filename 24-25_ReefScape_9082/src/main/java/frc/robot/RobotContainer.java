@@ -90,9 +90,9 @@ public class RobotContainer {
                 if(elementLift.getEncoderPosition() < elementLiftConstants.liftMinEncoder){
                     elementLift.setVoltage(1);
                 }
-                else if(elementLift.getEncoderPosition() > elementLiftConstants.liftMaxEncoder){
-                    elementLift.setVoltage(-1);
-                }
+//                else if(elementLift.getEncoderPosition() > elementLiftConstants.liftMaxEncoder){
+//                    elementLift.setVoltage(-1);
+//               }
                 else{
                 elementLift.setVoltage(-joystick2.getY()*12);    //Set power directly to the lift via the joystick y axis
                 }
@@ -112,7 +112,6 @@ public class RobotContainer {
         //Joystick 1 button bindings:
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
-        //joystick.x().whileTrue(L4CoralLTeleOpAutomation);
         new JoystickButton(joystick2, 7).whileTrue(new ElementLiftAutoHeight(elementLift, 18.0).repeatedly());
         new JoystickButton(joystick2, 8).whileTrue(new ElementLiftAutoHeight(elementLift, 32.0).repeatedly());
         new JoystickButton(joystick2, 9).whileTrue(new ElementLiftAutoHeight(elementLift, 48.0).repeatedly());
