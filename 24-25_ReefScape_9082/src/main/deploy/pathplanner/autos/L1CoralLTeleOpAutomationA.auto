@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CoralJAuto"
+            "pathName": "CoralLTeleOpA"
           }
         },
         {
@@ -17,19 +17,13 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "CoralEEAutoOuttake"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralJToHumanPlayer"
+                  "pathName": "CoralLToHumanPlayerA"
                 }
               },
               {

@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CoralLTeleOp"
+            "pathName": "CoralJAutoL"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ElementLiftAutoHeightL4"
+            "name": "ElementLiftAutoHeightL3"
           }
         },
         {
@@ -23,7 +23,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralLToHumanPlayer"
+                  "pathName": "CoralJToHumanPlayerA"
                 }
               },
               {
