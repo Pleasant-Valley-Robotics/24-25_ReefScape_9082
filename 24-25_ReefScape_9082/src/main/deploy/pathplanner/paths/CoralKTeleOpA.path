@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3497500000000002,
-        "y": 6.56975
+        "x": 1.9612221852033445,
+        "y": 6.369906949235274
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.1395000000000004,
-        "y": 4.17125
+        "x": 3.94875,
+        "y": 5.26325
       },
       "prevControl": {
-        "x": 2.7104999999999997,
-        "y": 4.6587499999999995
+        "x": 3.408263458679285,
+        "y": 5.5900332924328415
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -0.2557830307392739
+    "rotation": -58.94059117029002
   },
   "reversed": false,
   "folder": "CoralK",
