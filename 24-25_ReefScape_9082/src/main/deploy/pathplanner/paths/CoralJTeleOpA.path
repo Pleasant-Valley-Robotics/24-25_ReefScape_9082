@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.02125,
-        "y": 5.26325
+        "x": 1.2480000000000002,
+        "y": 7.028
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.41675,
-        "y": 6.443
+        "x": 2.5155000000000003,
+        "y": 6.62825
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.21875,
-        "y": 7.018249999999999
+        "x": 5.02125,
+        "y": 5.273
       },
       "prevControl": {
-        "x": 2.7494999999999985,
-        "y": 6.131
+        "x": 4.8165,
+        "y": 5.9165
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -53.61564818416411
+    "rotation": -119.88228098442752
   },
   "reversed": false,
   "folder": "CoralJ",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.74488129694225
+    "rotation": -52.9848662152566
   },
   "useDefaultConstraints": true
 }
