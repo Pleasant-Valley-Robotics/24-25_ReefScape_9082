@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.Constants.elementLiftConstants;
+import frc.robot.commands.CoralEEAutoIntake;
 import frc.robot.commands.CoralEEAutoOuttake;
 import frc.robot.commands.ElementLiftAutoHeight;
 import frc.robot.generated.TunerConstants;
@@ -290,11 +291,7 @@ public class RobotContainer {
         }, elementLift));
         utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
 
-        coralEE.setDefaultCommand(new RunCommand(() -> {
-            if (joystick2.getRawButton(1)){
-                coralEE.setVoltage(2.0);
-            }
-        }, coralEE));
+        coralEE.setDefaultCommand(new RunCommand(() -> {}, coralEE));
 
         //Joystick 1 button bindings:
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
@@ -407,12 +404,15 @@ public class RobotContainer {
             CoralL4ReefL.whileTrue(L4CoralLTeleOpAutomationB); 
         }
         
+        new JoystickButton(joystick2, 1).whileTrue(new CoralEEAutoOuttake(coralEE, 3.0, 2));
+        new JoystickButton(joystick2, 2).whileTrue(new CoralEEAutoIntake(utilitySensors, coralEE));
+
+        new JoystickButton(joystick3, 1).whileTrue(new RunCommand(()-> {elementLift.resetEncoder();}));
         new JoystickButton(joystick3, 2).whileTrue(new ElementLiftAutoHeight(elementLift, 18.0).repeatedly());
         new JoystickButton(joystick3, 3).whileTrue(new ElementLiftAutoHeight(elementLift, 32.0).repeatedly());
         new JoystickButton(joystick3, 4).whileTrue(new ElementLiftAutoHeight(elementLift, 48.0).repeatedly());
         new JoystickButton(joystick3, 5).whileTrue(new ElementLiftAutoHeight(elementLift, 72.0).repeatedly());
         
-        new JoystickButton(joystick3, 1).whileTrue(new RunCommand(()-> {elementLift.resetEncoder();}));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
