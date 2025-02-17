@@ -1,0 +1,44 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CoralETeleOpA"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ElementLiftAutoHeightL3"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CoralEToHumanPlayerA"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElementLiftAutoHeightHumanPlayer"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "CoralE",
+  "choreoAuto": false
+}

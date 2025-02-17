@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.2587090163934425,
+        "y": 7.051895491803278
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.8665,
+        "y": 7.2132499999999995
+      },
+      "isLocked": false,
+      "linkedName": "HumanPlayerStationA"
+    },
+    {
+      "anchor": {
+        "x": 3.943954918032787,
+        "y": 2.7842725409836064
+      },
+      "prevControl": {
+        "x": 2.38875,
+        "y": 1.4119999999999993
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "CoralD"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.75,
+    "maxAcceleration": 0.6,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 58.60452886463206
+  },
+  "reversed": false,
+  "folder": "CoralD",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -53.40891173260074
+  },
+  "useDefaultConstraints": true
+}
