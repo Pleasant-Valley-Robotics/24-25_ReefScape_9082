@@ -244,7 +244,19 @@ public class RobotContainer {
         NamedCommands.registerCommand("ElementLiftAutoHeightL2", new ElementLiftAutoHeight(elementLift, 32.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightL3", new ElementLiftAutoHeight(elementLift, 48.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightL4", new ElementLiftAutoHeight(elementLift, 72.0));
-        autoChooser = AutoBuilder.buildAutoChooser("L4CoralJAuto");
+        
+        // For convenience a programmer could change this when going to competition.
+        boolean isCompetition = true;
+
+        // Build an auto chooser. This will use Commands.none() as the default option.
+        // As an example, this will only show autos that start with "comp" while at
+        // competition as defined by the programmer
+        autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
+            (stream) -> isCompetition
+            ? stream.filter(auto -> auto.getName().startsWith("Auto"))
+            : stream
+        );
+
         SmartDashboard.putData("Auto Mode", autoChooser);
         drivetrain.registerTelemetry(logger::telemeterize);
         configureBindings();
