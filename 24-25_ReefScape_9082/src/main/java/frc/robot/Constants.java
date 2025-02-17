@@ -37,7 +37,7 @@ public final class Constants {
      * Math for Proportional Gain:
      * P = Desired Voltage / Desired Error
      * i.e. we want to be going at 2V when we are 12 inches away, we would have 2V/12in
-     * Which equates to 1V / 6 inches of error
+     * We use 1V / 2 inches of error, from experimenting
      */
     public static final double liftP = 1.0/2.0;
     /*
@@ -47,7 +47,7 @@ public final class Constants {
     public static final double liftI = 0.0;
 
     /*
-     * We need to research the value of Derivative Gain and how we would apply it here, if at all.
+     * IDK
      */
     public static final double liftD = 0;
 
