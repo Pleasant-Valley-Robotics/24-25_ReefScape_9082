@@ -239,6 +239,7 @@ public class RobotContainer {
 
 
     public RobotContainer() {
+        NamedCommands.registerCommand("CoralEEAutoIntake", new CoralEEAutoIntake(utilitySensors, coralEE));
         NamedCommands.registerCommand("CoralEEAutoOuttake", new CoralEEAutoOuttake(coralEE, 2.0, 3.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightHumanPlayer", new ElementLiftAutoHeight(elementLift, 11.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightL1", new ElementLiftAutoHeight(elementLift, 18.0));
