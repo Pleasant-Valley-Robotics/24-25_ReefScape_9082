@@ -3,45 +3,61 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.010860655737704,
-        "y": 2.7722848360655736
+        "x": 3.94875,
+        "y": 5.26325
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.650110655737706,
-        "y": 2.128784836065573
+        "x": 3.7732500000000004,
+        "y": 6.150499999999999
       },
       "isLocked": false,
-      "linkedName": "CoralE"
+      "linkedName": "CoralK"
     },
     {
       "anchor": {
-        "x": 2.6617499999999996,
-        "y": 3.3229999999999995
+        "x": 6.396,
+        "y": 4.5905
       },
       "prevControl": {
-        "x": 3.3499441598360655,
-        "y": 2.0117848360655737
+        "x": 6.34115625,
+        "y": 5.469828125
       },
       "nextControl": {
-        "x": 1.9735558401639337,
-        "y": 4.6342151639344245
+        "x": 6.45084375,
+        "y": 3.711171874999999
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.2587090163934425,
-        "y": 7.051895491803278
+        "x": 5.031000000000001,
+        "y": 2.3089999999999997
       },
       "prevControl": {
-        "x": 3.0517499999999993,
-        "y": 6.784249999999999
+        "x": 6.249750000000001,
+        "y": 2.815999999999999
+      },
+      "nextControl": {
+        "x": 3.3254364621003774,
+        "y": 1.5994855682337572
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.14075,
+        "y": 1.0707499999999994
+      },
+      "prevControl": {
+        "x": 1.9147650201724802,
+        "y": 0.59266736134047
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HumanPlayerStationA"
+      "linkedName": "HumanPlayerStationB"
     }
   ],
   "rotationTargets": [],
@@ -58,13 +74,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -53.40891173260074
+    "rotation": 53.05683413384656
   },
   "reversed": false,
-  "folder": "CoralE",
+  "folder": "CoralK",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 120.7627195342389
+    "rotation": -58.94059117029002
   },
   "useDefaultConstraints": true
 }

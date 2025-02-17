@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.010860655737704,
-        "y": 2.7722848360655736
+        "x": 1.14075,
+        "y": 1.0707499999999994
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.650110655737706,
-        "y": 2.128784836065573
+        "x": 2.4082500000000002,
+        "y": 0.6710000000000003
       },
       "isLocked": false,
-      "linkedName": "CoralE"
+      "linkedName": "HumanPlayerStationB"
     },
     {
       "anchor": {
-        "x": 2.6617499999999996,
-        "y": 3.3229999999999995
+        "x": 5.772,
+        "y": 2.61125
       },
       "prevControl": {
-        "x": 3.3499441598360655,
-        "y": 2.0117848360655737
+        "x": 5.256500648560419,
+        "y": 2.0903243395978968
       },
       "nextControl": {
-        "x": 1.9735558401639337,
-        "y": 4.6342151639344245
+        "x": 6.698250000000001,
+        "y": 3.547250000000001
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.2587090163934425,
-        "y": 7.051895491803278
+        "x": 5.0115,
+        "y": 5.28275
       },
       "prevControl": {
-        "x": 3.0517499999999993,
-        "y": 6.784249999999999
+        "x": 6.3375,
+        "y": 5.555750000000001
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HumanPlayerStationA"
+      "linkedName": "CoralJ"
     }
   ],
   "rotationTargets": [],
@@ -58,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -53.40891173260074
+    "rotation": -119.99999999999999
   },
   "reversed": false,
-  "folder": "CoralE",
+  "folder": "CoralJ",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 120.7627195342389
+    "rotation": 53.05683413384656
   },
   "useDefaultConstraints": true
 }

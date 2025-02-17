@@ -1,0 +1,102 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.6952499999999997,
+        "y": 5.117
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.588,
+        "y": 6.21875
+      },
+      "isLocked": false,
+      "linkedName": "CoralL"
+    },
+    {
+      "anchor": {
+        "x": 5.382000000000001,
+        "y": 5.507000000000001
+      },
+      "prevControl": {
+        "x": 4.952941546862316,
+        "y": 5.721529226568843
+      },
+      "nextControl": {
+        "x": 5.8305,
+        "y": 5.28275
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.249750000000001,
+        "y": 3.9274999999999993
+      },
+      "prevControl": {
+        "x": 6.347250000000001,
+        "y": 4.44425
+      },
+      "nextControl": {
+        "x": 6.091553697903343,
+        "y": 3.0890595988877148
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.382000000000001,
+        "y": 2.465
+      },
+      "prevControl": {
+        "x": 6.00614546671717,
+        "y": 2.800361743310718
+      },
+      "nextControl": {
+        "x": 4.728750000000001,
+        "y": 2.1139999999999994
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.14075,
+        "y": 1.0707499999999994
+      },
+      "prevControl": {
+        "x": 1.6575,
+        "y": 1.24625
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HumanPlayerStationB"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.75,
+    "maxAcceleration": 0.6,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 53.05683413384656
+  },
+  "reversed": false,
+  "folder": "CoralL",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -60.5385250290321
+  },
+  "useDefaultConstraints": true
+}
