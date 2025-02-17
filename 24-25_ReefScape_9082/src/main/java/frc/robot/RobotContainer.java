@@ -46,6 +46,7 @@ public class RobotContainer {
 
     private final CommandXboxController joystick = new CommandXboxController(0);
     private final Joystick joystick2 = new Joystick(1);
+    private final Joystick joystick3 = new Joystick(2);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final ElementLift elementLift = new ElementLift();
@@ -53,7 +54,7 @@ public class RobotContainer {
     public final CoralEndEffector coralEE = new CoralEndEffector();
     
 
-    //Buttons on Joystick 2 (Arm Joystick)
+    //Buttons on Joystick 2 (Arm Joystick 1)
     JoystickButton J2Button1 = new JoystickButton(joystick2, 1);
     JoystickButton J2Button2 = new JoystickButton(joystick2, 2);
     JoystickButton J2Button3 = new JoystickButton(joystick2, 3);
@@ -66,6 +67,20 @@ public class RobotContainer {
     JoystickButton J2Button10 = new JoystickButton(joystick2, 10);
     JoystickButton J2Button11 = new JoystickButton(joystick2, 11);
     JoystickButton J2Button12 = new JoystickButton(joystick2, 12);
+
+    //Buttons on Joystick 3 (Arm Joystick 2)
+    JoystickButton J3Button1 = new JoystickButton(joystick3, 1);
+    JoystickButton J3Button2 = new JoystickButton(joystick3, 2);
+    JoystickButton J3Button3 = new JoystickButton(joystick3, 3);
+    JoystickButton J3Button4 = new JoystickButton(joystick3, 4);
+    JoystickButton J3Button5 = new JoystickButton(joystick3, 5);
+    JoystickButton J3Button6 = new JoystickButton(joystick3, 6);
+    JoystickButton J3Button7 = new JoystickButton(joystick3, 7);
+    JoystickButton J3Button8 = new JoystickButton(joystick3, 8);
+    JoystickButton J3Button9 = new JoystickButton(joystick3, 9);
+    JoystickButton J3Button10 = new JoystickButton(joystick3, 10);
+    JoystickButton J3Button11 = new JoystickButton(joystick3, 11);
+    JoystickButton J3Button12 = new JoystickButton(joystick3, 12);
     
     //Coral Automation Triggers
     boolean HumanPlayerStation = true;  //True = A (Left), False = B (Right)
