@@ -6,7 +6,6 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
-import java.util.Queue;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -396,12 +395,12 @@ public class RobotContainer {
             CoralL4ReefL.whileTrue(L4CoralLTeleOpAutomationB); 
         }
         
-        //new JoystickButton(joystick2, 7).whileTrue(new ElementLiftAutoHeight(elementLift, 18.0).repeatedly());
-        //new JoystickButton(joystick2, 8).whileTrue(new ElementLiftAutoHeight(elementLift, 32.0).repeatedly());
-        //new JoystickButton(joystick2, 9).whileTrue(new ElementLiftAutoHeight(elementLift, 48.0).repeatedly());
-        //new JoystickButton(joystick2, 10).whileTrue(new ElementLiftAutoHeight(elementLift, 72.0).repeatedly());
+        new JoystickButton(joystick3, 2).whileTrue(new ElementLiftAutoHeight(elementLift, 18.0).repeatedly());
+        new JoystickButton(joystick3, 3).whileTrue(new ElementLiftAutoHeight(elementLift, 32.0).repeatedly());
+        new JoystickButton(joystick3, 4).whileTrue(new ElementLiftAutoHeight(elementLift, 48.0).repeatedly());
+        new JoystickButton(joystick3, 5).whileTrue(new ElementLiftAutoHeight(elementLift, 72.0).repeatedly());
         
-        //new JoystickButton(joystick2, 12).whileTrue(new RunCommand(()-> {elementLift.resetEncoder();}));
+        new JoystickButton(joystick3, 1).whileTrue(new RunCommand(()-> {elementLift.resetEncoder();}));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
