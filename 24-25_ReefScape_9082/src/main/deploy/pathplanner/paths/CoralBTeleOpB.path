@@ -9,23 +9,23 @@
       "prevControl": null,
       "nextControl": {
         "x": 2.5653688524590166,
-        "y": 1.2618340163934432
+        "y": 1.261834016393443
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HumanPlayerStationB"
     },
     {
       "anchor": {
-        "x": 3.1287909836065575,
+        "x": 3.1407786885245907,
         "y": 3.87515368852459
       },
       "prevControl": {
-        "x": 2.6607909836065575,
+        "x": 2.6727786885245908,
         "y": 3.2901536885245894
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "CoralB"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -0.5456575934157011
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "CoralB",
