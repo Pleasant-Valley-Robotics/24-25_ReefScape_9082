@@ -19,6 +19,14 @@ public class UtilitySensors extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+    SmartDashboard.putNumber("Coral Detector Output", coralDetector.getValue());
+  }
+  public boolean coralDetected(){
+    if(coralDetector.getValue() > 500){
+      return true;
+    }
+    else{
+    return false;
+    }
   }
 }

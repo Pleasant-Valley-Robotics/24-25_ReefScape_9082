@@ -49,7 +49,7 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final ElementLift elementLift = new ElementLift();
-    //public final UtilitySensors utilitySensors = new UtilitySensors();
+    public final UtilitySensors utilitySensors = new UtilitySensors();
     public final CoralEndEffector coralEE = new CoralEndEffector();
     
 
@@ -288,7 +288,7 @@ public class RobotContainer {
                 elementLift.setVoltage(0);
             }
         }, elementLift));
-        //utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
+        utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
 
         coralEE.setDefaultCommand(new RunCommand(() -> {
             if (joystick2.getRawButton(1)){
