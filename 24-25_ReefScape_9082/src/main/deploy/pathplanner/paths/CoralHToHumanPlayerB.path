@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.859749999999999,
+        "y": 4.161499999999999
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.32225,
+        "y": 2.94275
+      },
+      "isLocked": false,
+      "linkedName": "CoralH"
+    },
+    {
+      "anchor": {
+        "x": 1.14075,
+        "y": 1.0707499999999994
+      },
+      "prevControl": {
+        "x": 2.6714999999999987,
+        "y": 0.18350000000000044
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "HumanPlayerStationB"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.75,
+    "maxAcceleration": 0.6,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 53.05683413384656
+  },
+  "reversed": false,
+  "folder": "CoralH",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 179.75824709073189
+  },
+  "useDefaultConstraints": true
+}

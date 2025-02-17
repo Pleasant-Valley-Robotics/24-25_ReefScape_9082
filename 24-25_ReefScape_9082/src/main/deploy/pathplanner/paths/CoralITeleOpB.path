@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.14075,
+        "y": 1.0707499999999994
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.4082500000000002,
+        "y": 0.6710000000000003
+      },
+      "isLocked": false,
+      "linkedName": "HumanPlayerStationB"
+    },
+    {
+      "anchor": {
+        "x": 5.528250000000001,
+        "y": 2.6502499999999998
+      },
+      "prevControl": {
+        "x": 5.00175,
+        "y": 2.22125
+      },
+      "nextControl": {
+        "x": 6.817219519478837,
+        "y": 3.7005214603160876
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.303999999999999,
+        "y": 5.117
+      },
+      "prevControl": {
+        "x": 6.474000000000001,
+        "y": 5.06825
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "CoralI"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.75,
+    "maxAcceleration": 0.6,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -119.88228098442752
+  },
+  "reversed": false,
+  "folder": "CoralI",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 53.05683413384656
+  },
+  "useDefaultConstraints": true
+}
