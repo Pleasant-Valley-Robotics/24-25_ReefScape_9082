@@ -12,20 +12,20 @@
         "y": 1.2657499999999993
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HumanPlayerStationB"
     },
     {
       "anchor": {
-        "x": 5.29425,
-        "y": 2.94275
+        "x": 5.322540983606557,
+        "y": 2.9281249999999988
       },
       "prevControl": {
-        "x": 4.82625,
-        "y": 2.35775
+        "x": 4.854540983606557,
+        "y": 2.3431249999999983
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "CoralF"
     }
   ],
   "rotationTargets": [],

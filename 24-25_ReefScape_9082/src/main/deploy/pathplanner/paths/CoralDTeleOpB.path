@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.9389999999999996,
-        "y": 2.7769999999999992
+        "x": 3.943954918032787,
+        "y": 2.7842725409836064
       },
       "prevControl": {
-        "x": 3.4709999999999996,
-        "y": 2.191999999999999
+        "x": 3.475954918032787,
+        "y": 2.199272540983606
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "CoralD"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.08828321702531
+    "rotation": 58.60452886463206
   },
   "reversed": false,
   "folder": "CoralD",
