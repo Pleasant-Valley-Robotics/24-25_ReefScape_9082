@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2480000000000002,
-        "y": 7.028
+        "x": 1.2587090163934425,
+        "y": 7.051895491803278
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5155000000000003,
-        "y": 6.62825
+        "x": 2.5262090163934428,
+        "y": 6.652145491803279
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "HumanPlayerStationA"
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "CoralI"
     }
   ],
   "rotationTargets": [],
@@ -48,7 +48,7 @@
   "folder": "CoralI",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -52.9848662152566
+    "rotation": -53.40891173260074
   },
   "useDefaultConstraints": true
 }
