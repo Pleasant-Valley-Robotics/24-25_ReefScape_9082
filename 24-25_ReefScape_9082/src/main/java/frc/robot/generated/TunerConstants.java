@@ -171,7 +171,7 @@ public class TunerConstants {
     private static final Distance kBackRightYPos = Inches.of(-12.625);
 
     //Standard Deviation arrays
-    private static final Matrix<N3,N1> odometryStd = VecBuilder.fill(0.5,0.5,0.2);
+    private static final Matrix<N3,N1> odometryStd = VecBuilder.fill(0.25,0.25,0.1);
     private static final Matrix<N3,N1> visionStd = VecBuilder.fill(0.1,0.1,999999);
 
 

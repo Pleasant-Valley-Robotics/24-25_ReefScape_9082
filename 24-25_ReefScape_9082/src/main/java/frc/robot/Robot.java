@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
   private final RobotContainer m_robotContainer;
 
   private final boolean kUseLimelight = true;
+  private Matrix<N3,N1> visionStdDefault = VecBuilder.fill(0.1,0.1,999999);
   private Matrix<N3,N1> visionStd = VecBuilder.fill(0.1,0.1,999999);
   public Robot() {
     m_robotContainer = new RobotContainer();
@@ -47,10 +48,11 @@ public class Robot extends TimedRobot {
       LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
       var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
       if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0) {
-        visionStd = visionStd.times(llMeasurement.avgTagDist);
+        visionStd = visionStdDefault.times(llMeasurement.avgTagDist);
         SmartDashboard.putNumber("visionStdX", visionStd.get(0,0));
         SmartDashboard.putNumber("visionStdY", visionStd.get(1,0));
         SmartDashboard.putNumber("visionStdHeading", visionStd.get(2,0));
+        SmartDashboard.putNumber("llMeasurement avg tag dist", llMeasurement.avgTagDist);
         m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, Utils.fpgaToCurrentTime(llMeasurement.timestampSeconds), visionStd);
       }
     }
