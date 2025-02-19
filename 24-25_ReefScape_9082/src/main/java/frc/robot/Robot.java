@@ -6,8 +6,13 @@ package frc.robot;
 
 import com.ctre.phoenix6.Utils;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -17,7 +22,7 @@ public class Robot extends TimedRobot {
   private final RobotContainer m_robotContainer;
 
   private final boolean kUseLimelight = true;
-
+  private Matrix<N3,N1> visionStd = VecBuilder.fill(0.1,0.1,999999);
   public Robot() {
     m_robotContainer = new RobotContainer();
   }
@@ -42,7 +47,11 @@ public class Robot extends TimedRobot {
       LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
       var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
       if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0) {
-        m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, Utils.fpgaToCurrentTime(llMeasurement.timestampSeconds));
+        visionStd = visionStd.times(llMeasurement.avgTagDist);
+        SmartDashboard.putNumber("visionStdX", visionStd.get(0,0));
+        SmartDashboard.putNumber("visionStdY", visionStd.get(1,0));
+        SmartDashboard.putNumber("visionStdHeading", visionStd.get(2,0));
+        m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, Utils.fpgaToCurrentTime(llMeasurement.timestampSeconds), visionStd);
       }
     }
   }
