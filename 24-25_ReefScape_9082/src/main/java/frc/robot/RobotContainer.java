@@ -278,9 +278,12 @@ public class RobotContainer {
         
         //Element Lift handling
         elementLift.setDefaultCommand(new RunCommand(()->{
-            if(Math.abs(joystick2.getY()) > 0.065){  //Joystick deadzone of 0.05
+            if(Math.abs(joystick2.getY()) > 0.065){  //Joystick deadzone of 0.065
                 if(elementLift.getEncoderPosition() < elementLiftConstants.liftMinEncoder){
                     elementLift.setVoltage(1);
+                }
+                else if(elementLift.getEncoderPosition() > elementLiftConstants.liftMaxEncoder){
+                    elementLift.setVoltage(-1);
                 }
                 else{
                 elementLift.setVoltage(-joystick2.getY()*12);    //Set power directly to the lift via the joystick y axis
@@ -290,8 +293,8 @@ public class RobotContainer {
                 elementLift.setVoltage(0);
             }
         }, elementLift));
-        utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
 
+        utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
         coralEE.setDefaultCommand(new RunCommand(() -> {}, coralEE));
 
         //Joystick 1 button bindings:

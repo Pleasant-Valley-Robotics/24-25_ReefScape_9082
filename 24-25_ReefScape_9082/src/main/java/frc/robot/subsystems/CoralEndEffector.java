@@ -17,7 +17,7 @@ import frc.robot.Constants.coralEEConstants;
 
 
 public class CoralEndEffector extends SubsystemBase {
-  private final SparkMax coralEE = new SparkMax(coralEEConstants.coralEECAN, MotorType.kBrushless);
+  private final SparkMax coralEE = new SparkMax(coralEEConstants.coralEECAN, MotorType.kBrushed);
   private SparkMaxConfig coralEEConfig = new SparkMaxConfig();
 
   /** Creates a new CoralEndEffector. */

@@ -47,7 +47,7 @@ public class Robot extends TimedRobot {
 
       LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
       var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-      if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0) {
+      if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0 && llMeasurement.avgTagDist < 5) {
         visionStd = visionStdDefault.times(llMeasurement.avgTagDist);
         SmartDashboard.putNumber("visionStdX", visionStd.get(0,0));
         SmartDashboard.putNumber("visionStdY", visionStd.get(1,0));
