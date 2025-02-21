@@ -30,7 +30,7 @@ public class CoralEEAutoIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    coralEE.setVoltage(1);
+    coralEE.setVoltage(6);
   }
 
   // Called once the command ends or is interrupted.

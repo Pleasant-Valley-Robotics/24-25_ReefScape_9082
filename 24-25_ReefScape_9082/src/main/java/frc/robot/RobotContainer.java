@@ -408,9 +408,12 @@ public class RobotContainer {
             CoralL4ReefL.whileTrue(L4CoralLTeleOpAutomationB); 
         }
         
-        new JoystickButton(joystick2, 1).whileTrue(new CoralEEAutoOuttake(coralEE, 3.0, 2));
+        new JoystickButton(joystick2, 1).whileTrue(new CoralEEAutoOuttake(coralEE, 6.0, 2));
         new JoystickButton(joystick2, 2).whileTrue(new CoralEEAutoIntake(utilitySensors, coralEE));
-
+        //new JoystickButton(joystick2, 1).whileTrue(new RunCommand(()-> {coralEE.setVoltage(4);}));
+        //new JoystickButton(joystick2, 1).onFalse(new RunCommand(()-> {coralEE.setVoltage(0);}));
+        //new JoystickButton(joystick2, 2).whileTrue(new RunCommand(()-> {coralEE.setVoltage(-1);}));
+        
         new JoystickButton(joystick3, 1).whileTrue(new RunCommand(()-> {elementLift.resetEncoder();}));
         new JoystickButton(joystick3, 2).whileTrue(new ElementLiftAutoHeight(elementLift, 18.0).repeatedly());
         new JoystickButton(joystick3, 3).whileTrue(new ElementLiftAutoHeight(elementLift, 32.0).repeatedly());
