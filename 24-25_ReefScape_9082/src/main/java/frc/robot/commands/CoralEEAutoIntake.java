@@ -8,6 +8,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CoralEndEffector;
 import frc.robot.subsystems.UtilitySensors;
 
+/*
+ * This command will automatically drive the coral into the end-effector until
+ * the coral is no longer sticking out the back of our lift, ensuring a safe
+ * lifting process without risking any collisions. We want this to be handled
+ * autonomously to eliminate human error and prevent accidentally sending the
+ * coral out the front of our end-effector, as this is a simple through-put
+ * system. We do this by using a Modern Robotics Core Optical Distance Sensor
+ * placed at the entry-point of our end-effector, then we drive the coral into 
+ * the end-effector until it can no longer be seen by the sensor. At this point
+ * we know that the coral is fully staged in our system and we can move on without
+ * causing harm to our physical systems.
+ */
 public class CoralEEAutoIntake extends Command {
   
   //Class variable definitions
