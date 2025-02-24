@@ -20,7 +20,9 @@ public class CoralEndEffector extends SubsystemBase {
   private final SparkMax coralEE = new SparkMax(coralEEConstants.coralEECAN, MotorType.kBrushed);
   private SparkMaxConfig coralEEConfig = new SparkMaxConfig();
 
-  /** Creates a new CoralEndEffector. */
+  /** Creates a new CoralEndEffector for intaking coral, depositing coral to score, logging coral velocity, and logging applied output 
+   * to coral(the voltage the motor's running at). 
+  */
   public CoralEndEffector() {
         coralEEConfig
     .inverted(false)

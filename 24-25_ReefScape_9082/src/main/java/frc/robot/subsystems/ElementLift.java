@@ -21,7 +21,10 @@ public class ElementLift extends SubsystemBase {
   private SparkMaxConfig elementLiftConfig = new SparkMaxConfig();
   private PIDController elementLiftController = new PIDController(elementLiftConstants.liftP,elementLiftConstants.liftI,elementLiftConstants.liftD);
   
-  /** Creates a new ElementLift. */
+  /**Makes a new lift object that can go to a set height with logic to keep it between 2 values(a min and a max voltage stated in Constants file), automatically and constantly keep the string tightened to avoid it slipping 
+   * off the pulley and/or getting wrapped up in moving parts, manual controls if it's determined that the joystick's being moved 
+   * enough to be a driver moving it, logging where the encoders are, what height the lift is at, grabbing encoder values, grabbing speed, grabbing current volts being sent to the motor, setting power, etc. 
+  */
   public ElementLift() {
     elementLiftConfig
     .inverted(true)
