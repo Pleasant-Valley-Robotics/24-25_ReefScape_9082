@@ -12,7 +12,12 @@ public class ElementLiftAutoHeight extends Command {
   private final double height;
   private final ElementLift elementLift;
   
-  /** Creates a new ElementLiftAutoHeight. */
+  /**
+   * Creates a command that will lift to the specified height by calling the lift subsystems goToHeight() method. 
+   * Once it's done or interrupted motors are sent no more power. 
+   * @param elementLift the lift subsystem 
+   * @param height how high up to lift
+   */
   public ElementLiftAutoHeight(ElementLift elementLift, double height) {
     this.elementLift = elementLift;
     this.height = height;

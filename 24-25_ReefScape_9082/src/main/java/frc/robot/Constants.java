@@ -29,10 +29,10 @@ public final class Constants {
      * 6. Subtract the distance from the ground to the initial height of the end-effector
      * 7. Take the resulting distance and divide it by the measured encoders - this is the encoderToInches value
      */
-    public static final double measuredDistance = 71.0;
+    public static final double measuredDistance = 60.0;
     public static final double measuredEncoders = 74.5;
-    public static final double liftOffset = 11.0;
-    public static final double encoderToInches = (measuredDistance - liftOffset)/measuredEncoders;
+    public static final double liftOffset = 19.875;
+    public static final double encoderToInches = (measuredDistance)/measuredEncoders;
     /*
      * Math for Proportional Gain:
      * P = Desired Voltage / Desired Error
@@ -57,9 +57,17 @@ public final class Constants {
     //The minimum voltage that the element lift can have during a PID Controlled system
     public static final double liftMinVoltage = 1.5;
     
-    public static final double liftMaxEncoder = 76.5;
+    public static final double liftMaxEncoder = 78.5;
 
     public static final double liftMinEncoder = -10.0;
+    
+    public static final double humanPlayerStationHeight = liftOffset; //Height for human player station. 
+
+    //Coral level heights. 
+    public static final double coralL1Height = 18.0;
+    public static final double coralL2Height = 32.0; 
+    public static final double coralL3Height = 48.0;
+    public static final double coralL4Height = 75.0;
   }
   /*
    * Coral End Effector Constants

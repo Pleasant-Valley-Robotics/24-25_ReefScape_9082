@@ -8,15 +8,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CoralEndEffector;
 import edu.wpi.first.wpilibj.Timer;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class CoralEEAutoOuttake extends Command {
   private final double voltage;
   private final double timeToStop;
   private final CoralEndEffector coralEE;
   private Timer timer;
   
-
-  /** Creates a new CoralEEAutoOuttake. */
+  /**
+   * This command will automatically drive the coral out of the end effector
+   * and into the reef scoring options. This just drives a wheel at a provided
+   * voltage until a provided timeout value.
+   * @param coralEE the CoralEndEffector subsystem
+   * @param voltage the voltage to drive at
+   * @param timeToStop how long to run this command
+   */
   public CoralEEAutoOuttake(CoralEndEffector coralEE, double voltage, double timeToStop) {
     this.coralEE = coralEE;
     this.voltage = voltage;

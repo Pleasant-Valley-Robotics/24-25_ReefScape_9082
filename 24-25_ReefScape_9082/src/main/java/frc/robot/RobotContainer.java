@@ -239,13 +239,13 @@ public class RobotContainer {
 
 
     public RobotContainer() {
-        NamedCommands.registerCommand("CoralEEAutoIntake", new CoralEEAutoIntake(utilitySensors, coralEE));
+        NamedCommands.registerCommand("CoralEEAutoIntake", new CoralEEAutoIntake(utilitySensors, coralEE, elementLift));
         NamedCommands.registerCommand("CoralEEAutoOuttake", new CoralEEAutoOuttake(coralEE, 2.0, 3.0));
-        NamedCommands.registerCommand("ElementLiftAutoHeightHumanPlayer", new ElementLiftAutoHeight(elementLift, 11.0));
-        NamedCommands.registerCommand("ElementLiftAutoHeightL1", new ElementLiftAutoHeight(elementLift, 18.0));
-        NamedCommands.registerCommand("ElementLiftAutoHeightL2", new ElementLiftAutoHeight(elementLift, 32.0));
-        NamedCommands.registerCommand("ElementLiftAutoHeightL3", new ElementLiftAutoHeight(elementLift, 48.0));
-        NamedCommands.registerCommand("ElementLiftAutoHeightL4", new ElementLiftAutoHeight(elementLift, 72.0));
+        NamedCommands.registerCommand("ElementLiftAutoHeightHumanPlayer", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.humanPlayerStationHeight));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL1", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.coralL1Height));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL2", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.coralL2Height));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL3", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.coralL3Height));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL4", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.coralL4Height));
         
         // For convenience a programmer could change this when going to competition.
         boolean isCompetition = true;
@@ -409,7 +409,7 @@ public class RobotContainer {
         }
         
         new JoystickButton(joystick2, 1).whileTrue(new CoralEEAutoOuttake(coralEE, 6.0, 2));
-        new JoystickButton(joystick2, 2).whileTrue(new CoralEEAutoIntake(utilitySensors, coralEE));
+        //new JoystickButton(joystick2, 2).whileTrue(new CoralEEAutoIntake(utilitySensors, coralEE,elementLift));
         //new JoystickButton(joystick2, 1).whileTrue(new RunCommand(()-> {coralEE.setVoltage(4);}));
         //new JoystickButton(joystick2, 1).onFalse(new RunCommand(()-> {coralEE.setVoltage(0);}));
         //new JoystickButton(joystick2, 2).whileTrue(new RunCommand(()-> {coralEE.setVoltage(-1);}));
