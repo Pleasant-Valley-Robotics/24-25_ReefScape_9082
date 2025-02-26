@@ -21,8 +21,8 @@ public class UtilitySensors extends SubsystemBase {
   public UtilitySensors() {
     coralDetector = new AnalogInput(0);
     limelightfeed = new HttpCamera("limelight", "http://10.90.82.11:5801");
-    ShuffleboardTab dashboardTab = Shuffleboard.getTab("Dash");  
-    dashboardTab.add("LL", limelightfeed).withPosition(0, 0).withSize(15,8);
+    ShuffleboardTab dashboardTab = Shuffleboard.getTab("Dash"); 
+    dashboardTab.addCamera("limelight", "limelight", "http://10.90.82.11:5801");
   }
 
   @Override
