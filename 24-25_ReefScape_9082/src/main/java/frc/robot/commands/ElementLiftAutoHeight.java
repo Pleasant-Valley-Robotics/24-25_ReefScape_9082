@@ -21,6 +21,7 @@ public class ElementLiftAutoHeight extends Command {
   public ElementLiftAutoHeight(ElementLift elementLift, double height) {
     this.elementLift = elementLift;
     this.height = height;
+    
     addRequirements(elementLift);
   }
 

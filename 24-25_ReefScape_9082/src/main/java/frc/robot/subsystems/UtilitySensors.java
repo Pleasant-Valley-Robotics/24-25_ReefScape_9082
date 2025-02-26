@@ -33,7 +33,7 @@ public class UtilitySensors extends SubsystemBase {
     return coralDetector.getValue();
   }
   public boolean coralDetected(){
-    if(coralDetector.getValue() > 500){
+    if(coralDetector.getValue() > 250){
       return true;
     }
     else{

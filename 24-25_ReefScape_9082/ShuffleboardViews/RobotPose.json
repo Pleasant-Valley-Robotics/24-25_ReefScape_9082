@@ -296,6 +296,48 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "5,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Field",
+              "_source0": "network_table:///SmartDashboard/Field",
+              "_title": "/SmartDashboard/Field",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Game/Game": "k2025Reefscape",
+              "Visuals/Robot Icon Size": 50.0,
+              "Visuals/Show Outside Circles": false
+            }
+          },
+          "7,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Auto Selector",
+              "_title": "/SmartDashboard/Auto Selector",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "8,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Network Table Tree",
+              "_source0": "network_table:///SmartDashboard/DB",
+              "_title": "/SmartDashboard/DB",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -337,36 +379,6 @@
               "_showGlyph": false
             }
           },
-          "4,0": {
-            "size": [
-              3,
-              3
-            ],
-            "content": {
-              "_type": "Graph",
-              "_source0": "network_table:///limelight/botpose_wpiblue",
-              "_title": "/limelight/botpose_wpiblue",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Graph/Visible time": 30.0,
-              "Graph/X-axis auto scrolling": true,
-              "Y-axis/Automatic bounds": true,
-              "Y-axis/Upper bound": 1.0,
-              "Y-axis/Lower bound": -1.0,
-              "Y-axis/Unit": "ul",
-              "Visible data//limelight/botpose_wpiblue[0]": true,
-              "Visible data//limelight/botpose_wpiblue[1]": true,
-              "Visible data//limelight/botpose_wpiblue[2]": true,
-              "Visible data//limelight/botpose_wpiblue[3]": true,
-              "Visible data//limelight/botpose_wpiblue[4]": true,
-              "Visible data//limelight/botpose_wpiblue[5]": true,
-              "Visible data//limelight/botpose_wpiblue[6]": true,
-              "Visible data//limelight/botpose_wpiblue[7]": true,
-              "Visible data//limelight/botpose_wpiblue[8]": true,
-              "Visible data//limelight/botpose_wpiblue[9]": true,
-              "Visible data//limelight/botpose_wpiblue[10]": true
-            }
-          },
           "7,0": {
             "size": [
               3,
@@ -386,7 +398,23 @@
               "Y-axis/Unit": "ul",
               "Visible data//Pose/robotPose[0]": true,
               "Visible data//Pose/robotPose[1]": true,
-              "Visible data//Pose/robotPose[2]": false
+              "Visible data//Pose/robotPose[2]": true
+            }
+          },
+          "0,1": {
+            "size": [
+              7,
+              4
+            ],
+            "content": {
+              "_type": "Field",
+              "_source0": "network_table:///SmartDashboard/Field",
+              "_title": "/SmartDashboard/Field",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Game/Game": "k2025Reefscape",
+              "Visuals/Robot Icon Size": 50.0,
+              "Visuals/Show Outside Circles": false
             }
           }
         }

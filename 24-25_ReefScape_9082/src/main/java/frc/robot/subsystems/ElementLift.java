@@ -39,6 +39,7 @@ public class ElementLift extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Lift Encoder Value", elementLift.getEncoder().getPosition());
     SmartDashboard.putNumber("Lift Height", (elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches)+elementLiftConstants.liftOffset);
+    SmartDashboard.putNumber("Lift Voltage", elementLift.getAppliedOutput());
   }
   public void setSpeed(double speed){
     elementLift.set(speed);

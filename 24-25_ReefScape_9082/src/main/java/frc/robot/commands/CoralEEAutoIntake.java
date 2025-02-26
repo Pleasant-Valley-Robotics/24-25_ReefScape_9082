@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.CoralEndEffector;
 import frc.robot.subsystems.ElementLift;
 import frc.robot.subsystems.UtilitySensors;
@@ -38,9 +39,12 @@ public class CoralEEAutoIntake extends Command {
      */
     this.sensors = sensors;
     this.coralEE = coralEE;
+    this.elementLift = elementLift;
+
 
     addRequirements(sensors);
     addRequirements(coralEE);
+    addRequirements(elementLift);
   }
 
   // Called when the command is initially scheduled.
@@ -62,7 +66,7 @@ public class CoralEEAutoIntake extends Command {
      * This is enough to reasonably quickly send a coral out in a controlled
      * manner
      */
-    //elementLift.goToHeight()
+    elementLift.goToHeight(Constants.elementLiftConstants.humanPlayerStationHeight);
     coralEE.setVoltage(6);
   }
 

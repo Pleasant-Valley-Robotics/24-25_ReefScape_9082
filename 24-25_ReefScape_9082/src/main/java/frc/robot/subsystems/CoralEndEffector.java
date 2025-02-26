@@ -25,7 +25,7 @@ public class CoralEndEffector extends SubsystemBase {
   */
   public CoralEndEffector() {
         coralEEConfig
-    .inverted(false)
+    .inverted(true)
     .idleMode(IdleMode.kCoast);
   coralEE.configure(coralEEConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
