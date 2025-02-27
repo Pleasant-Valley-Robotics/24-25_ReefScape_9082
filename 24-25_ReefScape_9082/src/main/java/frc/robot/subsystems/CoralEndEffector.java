@@ -30,13 +30,19 @@ public class CoralEndEffector extends SubsystemBase {
   coralEE.configure(coralEEConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
+  /**
+   * Periodically put intake's velocity and applied output into SmartDashboard.
+   */
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    // This method will be called once per scheduler run.
     SmartDashboard.putNumber("CoralEE Velocity", coralEE.getEncoder().getVelocity());
     SmartDashboard.putNumber("CoralEE Applied Output", coralEE.getAppliedOutput());
   }
   
+  /**
+   * Sets voltage/power supplied to robot. 
+  */
   public void setVoltage(double voltage) {
     coralEE.setVoltage(voltage);
   }

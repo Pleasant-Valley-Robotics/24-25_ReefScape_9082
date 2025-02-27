@@ -25,13 +25,26 @@ public class UtilitySensors extends SubsystemBase {
     dashboardTab.addCamera("limelight", "limelight", "http://10.90.82.11:5801");
   }
 
+  /**
+   * Periodically log the modern distance sensor to SmartDashboard.  
+   */
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Coral Detector Output", coralDetector.getValue());
   }
+
+  /**
+   * Grab the value of the modern distance sensor. 
+   * @return the value of the modern distance sensor. 
+   */
   public double coralDetectorValue(){
     return coralDetector.getValue();
   }
+
+  /**
+   * Check and see if the sensor's seen the coral yet. 
+   * @return whether the sensor's seen the coral. 
+   */
   public boolean coralDetected(){
     if(coralDetector.getValue() > 250){
       return true;

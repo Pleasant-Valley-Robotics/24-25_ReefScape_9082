@@ -41,15 +41,39 @@ public class ElementLift extends SubsystemBase {
     SmartDashboard.putNumber("Lift Height", (elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches)+elementLiftConstants.liftOffset);
     SmartDashboard.putNumber("Lift Voltage", elementLift.getAppliedOutput());
   }
+
+  /**
+   * Set percentage of robot's battery that lift can use to power it.
+   * @param speed percentage of robot battery to use. 
+  */
   public void setSpeed(double speed){
     elementLift.set(speed);
   }
+
+  /**
+   * Send volts to lift to raise it. 
+   * @param voltage
+   */
   public void setVoltage(double voltage){
     elementLift.setVoltage(voltage);
   }
+
+  /**
+   * Set up PID controller.
+   * @param P 
+   * @param I
+   * @param D 
+   */
   public void setPIDGains(double P, double I, double D){
     elementLiftController.setPID(P,I,D);
   }
+
+  /**
+   * Calculate how much the lift should drive using the PID controller to allow for slowing down as getting closer to target. 
+   * Keep the string tightened by staying between a min and max value. If a person's trying to move the joystick and not just the 
+   * joystick getting shaken then move the lift.  
+   * @param height desired height of robot not including the amount that it's already off the ground. 
+   */
   public void goToHeight(double height){
     height = height - elementLiftConstants.liftOffset;  //Compensate for the height between the lift start position and the floor
     double voltage = elementLiftController.calculate(elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches, height);
@@ -71,23 +95,51 @@ public class ElementLift extends SubsystemBase {
     SmartDashboard.putNumber("Lift Accumulated Error", elementLiftController.getAccumulatedError());
     elementLift.setVoltage(voltage);  //Actually drive the lift with set voltage
   }
+
+  /**
+   * Return whether the robot is at the height the PID loop calculated. 
+   * @return whether lift's at the height calculated via PID loop. 
+   */
   public boolean atSetPoint(){
     return elementLiftController.atSetpoint();
   }
+
+  /**
+   * Grab the percentage of battery being used by lift. 
+   * @return percentage of battery used by lift. 
+   */
   public double getSpeed(){
     return elementLift.get();
   }
+
+  /**
+   * Grab the volts of power being used by the lift motor. 
+   * @return the volts of power being used by the lift motor. 
+   */
   public double getAppliedOutput(){
     return elementLift.getAppliedOutput();
   }
+
+  /**
+   * Grab the encoder velocity. 
+   * @return encoder velocity for lift encoder. 
+   */
   public double getEncoderVelocity(){
     return elementLift.getEncoder().getVelocity();
   }
+
+  /**
+   * Grab the encoder postition for the lift/where it thinks it is. 
+   * @return
+   */
   public double getEncoderPosition(){
     return elementLift.getEncoder().getPosition();
   }
+
+  /**
+   * Reset the encoder position for the lift to 0.
+   */
   public void resetEncoder(){
     elementLift.getEncoder().setPosition(0);
   }
-
 }

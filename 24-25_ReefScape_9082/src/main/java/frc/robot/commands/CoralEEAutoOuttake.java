@@ -31,6 +31,9 @@ public class CoralEEAutoOuttake extends Command {
   }
 
   // Called when the command is initially scheduled.
+  /**
+   * Make robot stop. Restart timer/countdown.
+   */
   @Override
   public void initialize() {
     coralEE.setVoltage(0);
@@ -39,18 +42,27 @@ public class CoralEEAutoOuttake extends Command {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
+  /**
+   * Set the intake to go the voltage given. 
+   */
   @Override
   public void execute() {
     coralEE.setVoltage(voltage);
   }
 
   // Called once the command ends or is interrupted.
+  /**
+   * Stop outake wheel from spinning. 
+   */
   @Override
   public void end(boolean interrupted) {
     coralEE.setVoltage(0);
   }
 
   // Returns true when the command should end.
+  /**
+   * If the outtake has ran for the given time then stop spinning the wheel.
+   */
   @Override
   public boolean isFinished() {
     return timer.hasElapsed(timeToStop);
