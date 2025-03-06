@@ -68,6 +68,10 @@ public final class Constants {
     public static final double coralL2Height = 32.0; 
     public static final double coralL3Height = 48.0;
     public static final double coralL4Height = 75.0;
+
+    public static final double robotContainerFrequency = 50;  //RobotContainer and all robot code runs 50 times per second unless we change manually, which, we dont.
+    public static final double maxInchesPerSecond = 6;  //Number of inches per second we allow the lift setpoint to change in teleop
+    public static final double elementLiftTeleopJoystickScalingFactor = maxInchesPerSecond/robotContainerFrequency;
   }
   /*
    * Coral End Effector Constants
