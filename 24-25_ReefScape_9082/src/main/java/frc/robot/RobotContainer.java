@@ -305,25 +305,24 @@ public class RobotContainer {
              * elementLift.goToHeight(setPoint);
              */
 
-             //If throttle's down don't override PID.
+             //If throttle's down don't override PID and use PID controls.
              if (joystick2.getThrottle() > 0) {
-
-             
-            if(Math.abs(joystick2.getY()) > 0.065){  //Joystick deadzone of 0.065
-                setPoint = setPoint +(elementLiftConstants.elementLiftTeleopJoystickScalingFactor * -joystick2.getY());
-            }
-                //if below minimum 
+                if(Math.abs(-joystick2.getY()) > 0.065){  //Joystick deadzone of 0.065
+                    setPoint = setPoint +(elementLiftConstants.elementLiftTeleopJoystickScalingFactor * -joystick2.getY());
+                }
+                //if below minimum bring lift up to minimum. 
                 if(elementLift.getEncoderPosition() < elementLiftConstants.liftMinEncoder * elementLiftConstants.encoderToInches){
                     setPoint = setPoint + (elementLiftConstants.liftMinEncoder * elementLiftConstants.encoderToInches);  
                 }
-                //if above liftMaxHeight bring lift back down to the liftMaxHeight.
+                //if above liftMaxHeight bring lift down to the liftMaxHeight.
                 if(elementLift.getEncoderPosition() > elementLiftConstants.liftMaxEncoder * elementLiftConstants.encoderToInches){
                     setPoint = setPoint + (elementLiftConstants.liftMaxEncoder * elementLiftConstants.encoderToInches); 
                 }
                 elementLift.goToHeight(setPoint);      
             }
-            else {
-                
+            //Enable manual control. 
+            else if (joystick2.getThrottle() <= 0){
+                elementLift.setVoltage(6 * -joystick2.getY()); //Scale it/increase power it's given so lift has enough to move. 
             }
 
         }, elementLift));
