@@ -322,6 +322,11 @@ public class RobotContainer {
             }
             //Enable manual control. 
             else if (joystick2.getThrottle() <= 0){
+                //if driver's trying to go past set maximum limit 
+                if (utilitySensors.liftHeightReached()) {
+                    elementLift.setVoltage(-1); //Bring lift down. 
+                }
+                
                 elementLift.setVoltage(6 * -joystick2.getY()); //Scale it/increase power it's given so lift has enough to move. 
             }
 
