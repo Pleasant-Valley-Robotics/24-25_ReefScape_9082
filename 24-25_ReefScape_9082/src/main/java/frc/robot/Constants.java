@@ -75,4 +75,8 @@ public final class Constants {
   public static class coralEEConstants{
     public static final int coralEECAN = 53;
   }
+  public static class LEDConstants{
+    public static final int port = 0;
+    public static final int bufferLenght = 300;
+  }
 }
