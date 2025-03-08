@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -286,22 +288,43 @@ public class RobotContainer {
         
         //Element Lift handling
         elementLift.setDefaultCommand(new RunCommand(()->{
+            double height; 
+            double setPoint = elementLiftConstants.liftOffset; 
             
-            if(Math.abs(joystick2.getY()) > 0.065){  //Joystick deadzone of 0.065
-                if(elementLift.getEncoderPosition() < elementLiftConstants.liftMinEncoder){
-                    elementLift.setVoltage(1);
+            //Rewrite this default command to always go off of a setpoint PID loop, like what you did on Radical post-season
+            //Maintain position even without holding down joystick. 
+
+            /*
+             * define setpoint variable as a global variable with offset as default
+             * deadband if here{
+             * setpoint = setpoint + (someScalarConstantInOurConstantsFile * -joystick2.getY())
+             * }
+             * if we are setting our setpoint below our minimum, set it to our minimum
+             * if we are setting our setpoint above our maximum, set it to our maximum
+             * 
+             * elementLift.goToHeight(setPoint);
+             */
+
+             //If throttle's down don't override PID and use PID controls.
+             if (joystick2.getThrottle() > 0) {
+                if(Math.abs(-joystick2.getY()) > 0.065){  //Joystick deadzone of 0.065
+                    setPoint = setPoint +(elementLiftConstants.elementLiftTeleopJoystickScalingFactor * -joystick2.getY());
                 }
-                else if(elementLift.getEncoderPosition() > elementLiftConstants.liftMaxEncoder){
-                    elementLift.setVoltage(-1);
+                //if below minimum bring lift up to minimum. 
+                if(elementLift.getEncoderPosition() < elementLiftConstants.liftMinEncoder * elementLiftConstants.encoderToInches){
+                    setPoint = setPoint + (elementLiftConstants.liftMinEncoder * elementLiftConstants.encoderToInches);  
                 }
-                else{
-                elementLift.setVoltage(-joystick2.getY()*12);    //Set power directly to the lift via the joystick y axis
+                //if above liftMaxHeight bring lift down to the liftMaxHeight.
+                if(elementLift.getEncoderPosition() > elementLiftConstants.liftMaxEncoder * elementLiftConstants.encoderToInches){
+                    setPoint = setPoint + (elementLiftConstants.liftMaxEncoder * elementLiftConstants.encoderToInches); 
                 }
+                elementLift.goToHeight(setPoint);      
             }
-            else{
-                elementLift.setVoltage(0);
+            //Enable manual control. 
+            else if (joystick2.getThrottle() <= 0){
+                elementLift.setVoltage(6 * -joystick2.getY()); //Scale it/increase power it's given so lift has enough to move. 
             }
-            
+
         }, elementLift));
 
         utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
