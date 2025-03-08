@@ -84,10 +84,11 @@ public class ElementLift extends SubsystemBase {
       voltage = (voltage/Math.abs(voltage))*(elementLiftConstants.liftMinVoltage+1.375);
       }
     }  
+    //else if the voltage is below the min required to hold the string tight apply a fraction of max voltage allowed to turn the motor that tightens the string. 
     else if (Math.abs(voltage) < elementLiftConstants.liftMinVoltage){
       voltage = (voltage/Math.abs(voltage))*elementLiftConstants.liftMinVoltage;
     }
-
+    //
     if (Math.abs(voltage) > elementLiftConstants.liftMaxVoltage){
       voltage = (voltage/Math.abs(voltage))*elementLiftConstants.liftMaxVoltage;
     }
@@ -141,5 +142,9 @@ public class ElementLift extends SubsystemBase {
    */
   public void resetEncoder(){
     elementLift.getEncoder().setPosition(0);
+  }
+
+  public PIDController getLiftPID() {
+    return elementLiftController; 
   }
 }
