@@ -77,6 +77,8 @@ public final class Constants {
   }
   public static class LEDConstants{
     public static final int port = 0;
+    //Will most likely need to change when we actually get the light's we'll use.
     public static final int bufferLenght = 720;
+    public static final int LEDsONStrip = 300; 
   }
 }
