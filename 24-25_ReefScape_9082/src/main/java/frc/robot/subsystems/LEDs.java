@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Percent;
+import static edu.wpi.first.units.Units.Second;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.LEDPattern;
@@ -14,7 +17,7 @@ import frc.robot.Constants;
 public class LEDs extends SubsystemBase {
   private static final int port = 0;
   private static final int length = 300;
-  
+  LEDPattern scrollingRainbow = LEDPattern.rainbow(255,5).scrollAtRelativeSpeed(Percent.per(Second).of(25));
   private final AddressableLED led;
   private final AddressableLEDBuffer buffer;
 
@@ -24,12 +27,16 @@ public class LEDs extends SubsystemBase {
     buffer = new AddressableLEDBuffer(Constants.LEDConstants.bufferLenght);
     led.setLength(Constants.LEDConstants.bufferLenght);
     led.start();
+    //this.solidPattern(Color.kBlue);
+
   }
 
   @Override
   public void periodic() {
+    scrollingRainbow.applyTo(buffer);
     // This method will be called once per scheduler run
     led.setData(buffer);
+    
   }
 
   /**

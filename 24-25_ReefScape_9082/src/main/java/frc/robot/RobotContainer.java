@@ -54,6 +54,7 @@ public class RobotContainer {
     public final ElementLift elementLift = new ElementLift();
     public final UtilitySensors utilitySensors = new UtilitySensors();
     public final CoralEndEffector coralEE = new CoralEndEffector();
+    public final frc.robot.subsystems.LEDs LEDs = new frc.robot.subsystems.LEDs();
     
 
     //Buttons on Joystick 2 (Arm Joystick 1)
@@ -306,6 +307,7 @@ public class RobotContainer {
 
         utilitySensors.setDefaultCommand(new RunCommand(() -> {}, utilitySensors));
         coralEE.setDefaultCommand(new RunCommand(() -> {}, coralEE));
+        LEDs.setDefaultCommand(new RunCommand(() -> {}, LEDs));
 
         //Joystick 1 button bindings:
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
