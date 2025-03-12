@@ -11,7 +11,8 @@ import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Seconds;
 
 import java.util.Map;
- 
+import java.util.Optional;
+
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -35,6 +36,8 @@ public class LEDs extends SubsystemBase {
   
   private final AddressableLED led;
   private final AddressableLEDBuffer buffer;
+  Optional<Alliance> alliance;
+  
 
   /** Creates a new LEDs. */
   public LEDs() {
@@ -42,12 +45,14 @@ public class LEDs extends SubsystemBase {
     buffer = new AddressableLEDBuffer(Constants.LEDConstants.bufferLenght);
     led.setLength(Constants.LEDConstants.bufferLenght);
     led.start();
+
+     alliance = DriverStation.getAlliance();
   }
 
   @Override
   public void periodic() {
     
-    if(DriverStation.getAlliance().equals(Alliance.Blue)){
+    if(alliance.get() == Alliance.Blue){
       showBreatheBlue();
     }
     else{
