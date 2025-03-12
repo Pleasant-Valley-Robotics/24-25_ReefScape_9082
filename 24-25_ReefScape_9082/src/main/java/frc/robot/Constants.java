@@ -75,4 +75,7 @@ public final class Constants {
   public static class coralEEConstants{
     public static final int coralEECAN = 53;
   }
+  public static class AlgaeFlickerConstants {
+    public static final int AlgaeFlickerCAN = 54; 
+  }
 }
