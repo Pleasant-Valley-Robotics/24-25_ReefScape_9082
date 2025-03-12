@@ -8,12 +8,16 @@ package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Percent;
 import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Seconds;
 
 import java.util.Map;
  
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
@@ -23,6 +27,9 @@ import frc.robot.Constants;
 public class LEDs extends SubsystemBase {
   private static final int port = 0;
   private static final int length = 300;
+
+  Color blueColor = new Color(0,0,255);
+  Color yellowColor = new Color(255, 255, 0);
 
   LEDPattern scrollingRainbow = LEDPattern.rainbow(255,5).scrollAtRelativeSpeed(Percent.per(Second).of(25)); 
   
@@ -39,7 +46,15 @@ public class LEDs extends SubsystemBase {
 
   @Override
   public void periodic() {
-    scrollingRainbow.applyTo(buffer);
+    
+    if(DriverStation.getAlliance().equals(Alliance.Blue)){
+      showBreatheBlue();
+    }
+    else{
+      showBreatheRed();
+    }
+    //showBreathe(blueColor, yellowColor);
+    //scrollingRainbow.applyTo(buffer);
     // This method will be called once per scheduler run
     led.setData(buffer);
   }
@@ -62,8 +77,8 @@ public class LEDs extends SubsystemBase {
    * @param startAndEndColor color pattern will start and end with.
    * @param middleColor middle color.
    */
-  public void showContinuousGradient(Color startAndEndColor, Color middleColor){
-    LEDPattern gradient = LEDPattern.gradient(LEDPattern.GradientType.kContinuous, startAndEndColor, middleColor);
+  public void showContinuousGradient(Color blueColor, Color yellowColor){
+    LEDPattern gradient = LEDPattern.gradient(LEDPattern.GradientType.kContinuous, blueColor, yellowColor).atBrightness(Percent.of(50));
     gradient.applyTo(buffer); 
     led.setData(buffer);
   }
@@ -101,46 +116,27 @@ public class LEDs extends SubsystemBase {
     led.setData(buffer);
   }
 
-  //To modify patterns
-  //-----------------------------------------------------------------
+  public void showBreatheBlue(){
+    LEDPattern base = LEDPattern.solid(blueColor).atBrightness(Percent.of(100));
+    LEDPattern pattern = base.breathe(Seconds.of(2));
 
-  /**
-   * Shows a blue and yellow gradient. Offsets by number given, away from the start of the LED strip if offset's positive. Towards the start if offset's negative. 
-   * @param offset Distance away from start and end of LED strip in pixels.
-   */
-  public void showOffset(int offset) {
-    LEDPattern base = LEDPattern.discontinuousGradient(Color.kBlue, Color.kYellow);
-    LEDPattern pattern = base.offsetBy(offset);
-    LEDPattern negative = base.offsetBy(offset); 
-
+    // Apply the LED pattern to the data buffer
     pattern.applyTo(buffer);
+
+    // Write the data to the LED strip
     led.setData(buffer);
   }
 
-  /**
-   * Shows the colors given in a flipped pattern.
-   * @param firstColor color that will be the second color shown.
-   * @param secondColor Color that will be the first color shown.
-   */
-  public void showReverse(Color firstColor, Color secondColor) {
-    LEDPattern base = LEDPattern.discontinuousGradient(firstColor, secondColor);
-    LEDPattern pattern = base.reversed();
+  public void showBreatheRed() {
+    LEDPattern base = LEDPattern.solid(blueColor).atBrightness(Percent.of(100));
+    LEDPattern pattern = base.breathe(Seconds.of(2));
+
+    // Apply the LED pattern to the data buffer
     pattern.applyTo(buffer);
+
+    // Write the data to the LED strip
     led.setData(buffer);
   }
-
-  /**
-   * Shows pattern that scrolls certain speed per second 
-   * @param speed what percent of the bar you want to move for every 
-   * @param seconds how many seconds do you want the 
-   */
-  public void showScroll(int speed, int seconds) {
-    LEDPattern base = LEDPattern.discontinuousGradient(Color.kBlue, Color.kYellow);
-    LEDPattern base = base.scrollAtRelativeSpeed(speed.per(Second).of(speed));
-  }
-
-
-
 
   //To create  patterns
   //-----------------------------------------------------------------
