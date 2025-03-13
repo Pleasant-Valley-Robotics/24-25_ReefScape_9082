@@ -15,6 +15,7 @@ import java.util.Optional;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.AddressableLEDBufferView;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.LEDPattern;
@@ -35,7 +36,10 @@ public class LEDs extends SubsystemBase {
     SOLID_YELLOW,
     BREATHE_BLUE,
     BREATHE_RED,
-    BREATHE_YELLOW
+    BREATHE_YELLOW,
+    PROGRESSMASK_YELLOW,
+    SCROLLING_RAINBOW,
+    MEETINGINMIDDLE_YELLOW
   }
 
   private ShowPattern showPattern; 
@@ -54,7 +58,7 @@ public class LEDs extends SubsystemBase {
   LEDPattern breatheRedPattern = LEDPattern.solid(redColor).atBrightness(Percent.of(100)).breathe(Seconds.of(2));
   LEDPattern breatheYellowPattern = LEDPattern.solid(yellowColor).atBrightness(Percent.of(100)).breathe(Seconds.of(2));
 
-  LEDPattern progressMaskPattern = LEDPattern.progressMaskLayer(() -> RobotContainer.elementLift.getEncoderPosition() / elementLiftConstants.liftMaxEncoder);
+  LEDPattern progressMaskYellowPattern = LEDPattern.solid(yellowColor).mask(LEDPattern.progressMaskLayer(() -> RobotContainer.elementLift.getEncoderPosition() / elementLiftConstants.liftMaxEncoder));
 
   private final AddressableLED liftLED;
   private final AddressableLED funnelLED;
@@ -62,11 +66,14 @@ public class LEDs extends SubsystemBase {
   private final AddressableLEDBuffer liftBuffer;
   private final AddressableLEDBuffer funnelBuffer;
 
+  AddressableLEDBufferView leftLift;
+  AddressableLEDBufferView rightLift;
+
   Optional<Alliance> alliance;
 
   /** Creates a new LEDs. */
   public LEDs() {
-    this.showPattern = ShowPattern.SOLID_BLUE;
+    this.showPattern = ShowPattern.BREATHE_YELLOW;
 
     liftLED = new AddressableLED(Constants.LEDConstants.liftLEDPort);
     funnelLED = new AddressableLED(Constants.LEDConstants.funnelLEDPort);
@@ -80,7 +87,10 @@ public class LEDs extends SubsystemBase {
     liftLED.start();
     funnelLED.start();
 
-     alliance = DriverStation.getAlliance();
+    alliance = DriverStation.getAlliance();
+
+    leftLift = liftBuffer.createView(0, 24);
+    rightLift = liftBuffer.createView(25, 48);
   }
 
   @Override
@@ -110,6 +120,16 @@ public class LEDs extends SubsystemBase {
         breatheYellowPattern.applyTo(liftBuffer);
         breatheYellowPattern.applyTo(funnelBuffer);
         break;
+      case PROGRESSMASK_YELLOW:
+        progressMaskYellowPattern.applyTo(liftBuffer);
+        progressMaskYellowPattern.applyTo(funnelBuffer);
+        break;
+      case SCROLLING_RAINBOW:
+        scrollingRainbow.applyTo(liftBuffer);
+        scrollingRainbow.applyTo(funnelBuffer);
+      case MEETINGINMIDDLE_YELLOW:
+        solidBluePattern.applyTo(leftLift);
+        solidYellowPattern.applyTo(rightLift);
     }
 
     liftLED.setData(liftBuffer);
