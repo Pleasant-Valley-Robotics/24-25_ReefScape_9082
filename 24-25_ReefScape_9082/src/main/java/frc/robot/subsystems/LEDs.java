@@ -24,125 +24,103 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.elementLiftConstants; 
+import frc.robot.Constants.LEDConstants;
+import frc.robot.RobotContainer;
 
 public class LEDs extends SubsystemBase {
-  private static final int port = 0;
-  private static final int length = 300;
+  public enum ShowPattern {
+    SOLID_BLUE,
+    SOLID_RED,
+    SOLID_YELLOW,
+    BREATHE_BLUE,
+    BREATHE_RED,
+    BREATHE_YELLOW
+  }
+
+  private ShowPattern showPattern; 
 
   Color blueColor = new Color(0,0,255);
   Color yellowColor = new Color(255, 255, 0);
+  Color redColor = new Color(0, 255, 0);
 
-  LEDPattern scrollingRainbow = LEDPattern.rainbow(255,5).scrollAtRelativeSpeed(Percent.per(Second).of(25)); 
-  
-  private final AddressableLED led;
-  private final AddressableLEDBuffer buffer;
+  LEDPattern scrollingRainbow = LEDPattern.rainbow(255,5).scrollAtRelativeSpeed(Percent.per(Second).of(25));
+
+  LEDPattern solidBluePattern = LEDPattern.solid(blueColor);
+  LEDPattern solidRedPattern = LEDPattern.solid(redColor);
+  LEDPattern solidYellowPattern = LEDPattern.solid(yellowColor);
+
+  LEDPattern breatheBluePattern = LEDPattern.solid(blueColor).atBrightness(Percent.of(100)).breathe(Seconds.of(2));
+  LEDPattern breatheRedPattern = LEDPattern.solid(redColor).atBrightness(Percent.of(100)).breathe(Seconds.of(2));
+  LEDPattern breatheYellowPattern = LEDPattern.solid(yellowColor).atBrightness(Percent.of(100)).breathe(Seconds.of(2));
+
+  LEDPattern progressMaskPattern = LEDPattern.progressMaskLayer(() -> RobotContainer.elementLift.getEncoderPosition() / elementLiftConstants.liftMaxEncoder);
+
+  private final AddressableLED liftLED;
+  private final AddressableLED funnelLED;
+
+  private final AddressableLEDBuffer liftBuffer;
+  private final AddressableLEDBuffer funnelBuffer;
+
   Optional<Alliance> alliance;
-  
 
   /** Creates a new LEDs. */
   public LEDs() {
-    led = new AddressableLED(Constants.LEDConstants.port);
-    buffer = new AddressableLEDBuffer(Constants.LEDConstants.bufferLenght);
-    led.setLength(Constants.LEDConstants.bufferLenght);
-    led.start();
+    this.showPattern = ShowPattern.SOLID_BLUE;
+
+    liftLED = new AddressableLED(Constants.LEDConstants.liftLEDPort);
+    funnelLED = new AddressableLED(Constants.LEDConstants.funnelLEDPort);
+
+    liftBuffer = new AddressableLEDBuffer(Constants.LEDConstants.liftBufferLength);
+    funnelBuffer = new AddressableLEDBuffer(Constants.LEDConstants.funnelBufferLength);
+
+    liftLED.setLength(Constants.LEDConstants.liftBufferLength);
+    funnelLED.setLength(Constants.LEDConstants.funnelBufferLength);
+
+    liftLED.start();
+    funnelLED.start();
 
      alliance = DriverStation.getAlliance();
   }
 
   @Override
   public void periodic() {
-    
-    if(alliance.get() == Alliance.Blue){
-      showBreatheBlue();
+    switch (showPattern){
+      case SOLID_BLUE:
+        solidBluePattern.applyTo(liftBuffer);
+        solidBluePattern.applyTo(funnelBuffer);
+        break;
+      case SOLID_RED:
+        solidRedPattern.applyTo(liftBuffer);
+        solidRedPattern.applyTo(funnelBuffer);
+        break;
+      case SOLID_YELLOW:
+        solidYellowPattern.applyTo(liftBuffer);
+        solidYellowPattern.applyTo(funnelBuffer);
+        break;
+      case BREATHE_BLUE:
+        breatheBluePattern.applyTo(liftBuffer);
+        breatheBluePattern.applyTo(funnelBuffer);
+        break;
+      case BREATHE_RED:
+        breatheRedPattern.applyTo(liftBuffer);
+        breatheRedPattern.applyTo(funnelBuffer);
+        break;
+      case BREATHE_YELLOW:
+        breatheYellowPattern.applyTo(liftBuffer);
+        breatheYellowPattern.applyTo(funnelBuffer);
+        break;
     }
-    else{
-      showBreatheRed();
-    }
-    //showBreathe(blueColor, yellowColor);
-    //scrollingRainbow.applyTo(buffer);
-    // This method will be called once per scheduler run
-    led.setData(buffer);
+
+    liftLED.setData(liftBuffer);
+    funnelLED.setData(funnelBuffer);
   }
 
-  //To create patterns.
-  //-----------------------------------------------------------------
-
-  /**
-   * Shows one color with no special effects.
-   * @param color color you want the pattern to be. 
-   */
-  public void showSolidPattern(Color color) {
-    LEDPattern desiredColor = LEDPattern.solid(color);
-    desiredColor.applyTo(buffer);
-    led.setData(buffer);
+  public void setLEDPattern(ShowPattern pattern){
+    showPattern = pattern;
   }
 
-  /**
-   * Shows continous gradient of 2 colors. Pattern wraps around.
-   * @param startAndEndColor color pattern will start and end with.
-   * @param middleColor middle color.
-   */
-  public void showContinuousGradient(Color blueColor, Color yellowColor){
-    LEDPattern gradient = LEDPattern.gradient(LEDPattern.GradientType.kContinuous, blueColor, yellowColor).atBrightness(Percent.of(50));
-    gradient.applyTo(buffer); 
-    led.setData(buffer);
+  public ShowPattern getLEDPattern(){
+    return showPattern;
   }
-
-  /**
-   * Shows discontinuous gradient. Doesn't wrap around.
-   * @param firstColor first color to be shown on pattern.
-   * @param lastColor second color to be shown on pattern.
-   */
-  public void showDiscontinuousGradient(Color firstColor, Color lastColor) {
-    LEDPattern gradient = LEDPattern.gradient(LEDPattern.GradientType.kDiscontinuous, firstColor, lastColor);
-    gradient.applyTo(buffer);
-    led.setData(buffer);
-  }
-
-  /**
-   * Shows a step pattern with half one color and half a different color.
-   * @param startingColor color for first half of step.
-   * @param endingColor color for last half of the step.
-   */
-  public void showSteps(Color startingColor, Color endingColor){
-    LEDPattern steps = LEDPattern.steps(Map.of(0, startingColor, 0.5, endingColor));
-    steps.applyTo(buffer);
-    led.setData(buffer);
-  }
-
- /**
-  * Shows percent of progress via leds using how far you are in getting to the goal and the goal(in numbers). Uses black and white.
-  * @param currentProgress what robot's at now(current position or a current sensor value).
-  * @param goal value the robot should go to(a target distance or a target sensor reading).
-  */
-  public void showDefaultProgressMask(double currentProgress, double goal) {
-    LEDPattern pattern = LEDPattern.progressMaskLayer(() -> currentProgress / goal);
-    pattern.applyTo(buffer);
-    led.setData(buffer);
-  }
-
-  public void showBreatheBlue(){
-    LEDPattern base = LEDPattern.solid(blueColor).atBrightness(Percent.of(100));
-    LEDPattern pattern = base.breathe(Seconds.of(2));
-
-    // Apply the LED pattern to the data buffer
-    pattern.applyTo(buffer);
-
-    // Write the data to the LED strip
-    led.setData(buffer);
-  }
-
-  public void showBreatheRed() {
-    LEDPattern base = LEDPattern.solid(blueColor).atBrightness(Percent.of(100));
-    LEDPattern pattern = base.breathe(Seconds.of(2));
-
-    // Apply the LED pattern to the data buffer
-    pattern.applyTo(buffer);
-
-    // Write the data to the LED strip
-    led.setData(buffer);
-  }
-
-  //To create  patterns
-  //-----------------------------------------------------------------
 }

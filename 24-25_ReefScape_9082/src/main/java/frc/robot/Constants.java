@@ -76,9 +76,13 @@ public final class Constants {
     public static final int coralEECAN = 53;
   }
   public static class LEDConstants{
-    public static final int port = 0;
+    public static final int liftLEDPort = 0;
+    public static final int funnelLEDPort = 1;
+    
     //Will most likely need to change when we actually get the light's we'll use.
-    public static final int bufferLenght = 720;
+    public static final int liftBufferLength = 720;
+    public static final int funnelBufferLength = 720;
+
     public static final int LEDsONStrip = 300; 
   }
 }
