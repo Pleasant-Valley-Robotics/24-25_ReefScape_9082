@@ -27,7 +27,7 @@ public class ElementLift extends SubsystemBase {
   */
   public ElementLift() {
     elementLiftConfig
-    .inverted(true)
+    .inverted(false)
     .idleMode(IdleMode.kBrake);
   elementLift.configure(elementLiftConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   elementLiftController.setTolerance(0.25);
@@ -40,6 +40,7 @@ public class ElementLift extends SubsystemBase {
     SmartDashboard.putNumber("Lift Encoder Value", elementLift.getEncoder().getPosition());
     SmartDashboard.putNumber("Lift Height", (elementLift.getEncoder().getPosition()*elementLiftConstants.encoderToInches)+elementLiftConstants.liftOffset);
     SmartDashboard.putNumber("Lift Voltage", elementLift.getAppliedOutput());
+    SmartDashboard.putNumber("Lift Motor Current", elementLift.getOutputCurrent());
   }
 
   /**

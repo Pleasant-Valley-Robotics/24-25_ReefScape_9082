@@ -57,7 +57,7 @@ public final class Constants {
     //The minimum voltage that the element lift can have during a PID Controlled system
     public static final double liftMinVoltage = 1.5;
     
-    public static final double liftMaxEncoder = 78.5;
+    public static final double liftMaxEncoder = 320.0;
 
     public static final double liftMinEncoder = -10.0;
     
@@ -77,6 +77,9 @@ public final class Constants {
   }
   public static class LEDConstants{
     public static final int liftLEDPort = 0;
-    public static final int liftBufferLength = 720;
+    public static final int liftBufferLength = 3600;
+
+    public static final int LEDSPerMeter = 720;  //720 LEDS per meter.
+    public static final int totalLEDLengthUsed = 720;
   }
 }
