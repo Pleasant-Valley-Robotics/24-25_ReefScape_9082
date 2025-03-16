@@ -5,7 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.CoralEndEffector;
+import frc.robot.subsystems.LEDs.ShowPattern;
 import edu.wpi.first.wpilibj.Timer;
 
 public class CoralEEAutoOuttake extends Command {
@@ -13,6 +15,7 @@ public class CoralEEAutoOuttake extends Command {
   private final double timeToStop;
   private final CoralEndEffector coralEE;
   private Timer timer;
+  private ShowPattern lastPattern;
   
   /**
    * This command will automatically drive the coral out of the end effector
@@ -48,6 +51,8 @@ public class CoralEEAutoOuttake extends Command {
   @Override
   public void execute() {
     coralEE.setVoltage(voltage);
+    lastPattern = RobotContainer.LEDs.showPattern; 
+    RobotContainer.LEDs.showPattern = ShowPattern.solidWhite; 
   }
 
   // Called once the command ends or is interrupted.
@@ -56,6 +61,7 @@ public class CoralEEAutoOuttake extends Command {
    */
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.LEDs.showPattern = lastPattern;
     coralEE.setVoltage(0);
   }
 

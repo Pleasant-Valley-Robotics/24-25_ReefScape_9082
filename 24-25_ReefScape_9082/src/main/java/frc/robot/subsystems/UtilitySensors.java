@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.LEDs.ShowPattern;
 //import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -13,6 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class UtilitySensors extends SubsystemBase {
   private AnalogInput coralDetector; 
+  private ShowPattern lastPattern;
 //  private HttpCamera limelightfeed; 
 
   /** Creates a new UtilitySensors subsystem that sets up the camera tab and starts the feed so drivers can see the camera output, creates the sensor object, 
@@ -47,9 +50,12 @@ public class UtilitySensors extends SubsystemBase {
    */
   public boolean coralDetected(){
     if(coralDetector.getValue() > 250){
+      lastPattern = RobotContainer.LEDs.showPattern;
+      RobotContainer.LEDs.showPattern = ShowPattern.solidRed;
       return true;
     }
     else{
+      RobotContainer.LEDs.showPattern = lastPattern;
     return false;
     }
   }

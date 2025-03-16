@@ -50,11 +50,11 @@ public class RobotContainer {
     private final Joystick joystick2 = new Joystick(1);
     private final Joystick joystick3 = new Joystick(2);
 
-    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    public final ElementLift elementLift = new ElementLift();
-    public final UtilitySensors utilitySensors = new UtilitySensors();
-    public final CoralEndEffector coralEE = new CoralEndEffector();
-    public final frc.robot.subsystems.LEDs LEDs = new frc.robot.subsystems.LEDs();
+    public static final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public static final ElementLift elementLift = new ElementLift();
+    public static final UtilitySensors utilitySensors = new UtilitySensors();
+    public static final CoralEndEffector coralEE = new CoralEndEffector();
+    public static final frc.robot.subsystems.LEDs LEDs = new frc.robot.subsystems.LEDs();
     
 
     //Buttons on Joystick 2 (Arm Joystick 1)
