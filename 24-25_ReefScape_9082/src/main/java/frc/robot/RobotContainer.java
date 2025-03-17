@@ -421,7 +421,8 @@ public class RobotContainer {
         }
         
         new JoystickButton(joystick2, 1).whileTrue(new CoralEEAutoOuttake(coralEE, 6.0, 2));
-        new JoystickButton(joystick2, 2).whileTrue(coralIntakeButtonCommand);
+        new JoystickButton(joystick2, 2).whileTrue(new RunCommand((() -> coralEE.setVoltage(12))));
+        new JoystickButton(joystick2, 2).onFalse(new RunCommand((() -> coralEE.setVoltage(0))));
         //new JoystickButton(joystick2, 1).whileTrue(new RunCommand(()-> {coralEE.setVoltage(4);}));
         //new JoystickButton(joystick2, 1).onFalse(new RunCommand(()-> {coralEE.setVoltage(0);}));
         //new JoystickButton(joystick2, 2).whileTrue(new RunCommand(()-> {coralEE.setVoltage(-1);}));
