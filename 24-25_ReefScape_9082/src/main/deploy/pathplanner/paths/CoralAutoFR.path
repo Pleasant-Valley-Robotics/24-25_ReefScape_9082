@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.859749999999999,
-        "y": 4.161499999999999
+        "x": 7.588217213114754,
+        "y": 0.530584016393442
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.522750000000001,
-        "y": 6.2675
+        "x": 6.7177500000000006,
+        "y": 1.8215
       },
       "isLocked": false,
-      "linkedName": "CoralH"
+      "linkedName": "AutoRight"
     },
     {
       "anchor": {
-        "x": 1.2587090163934425,
-        "y": 7.051895491803278
+        "x": 5.4014999999999995,
+        "y": 3.0012499999999993
       },
       "prevControl": {
-        "x": 2.789459016393441,
-        "y": 6.164645491803279
+        "x": 6.250709016393442,
+        "y": 2.274875
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HumanPlayerStationA"
+      "linkedName": "CoralF"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -53.40891173260074
+    "rotation": 120.7627195342389
   },
   "reversed": false,
-  "folder": "CoralH",
+  "folder": "CoralF",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.75824709073189
+    "rotation": 179.30972280213498
   },
   "useDefaultConstraints": true
 }

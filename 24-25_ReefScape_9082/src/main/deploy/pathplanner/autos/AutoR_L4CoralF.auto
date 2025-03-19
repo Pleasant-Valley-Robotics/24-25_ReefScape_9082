@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CoralDAutoR"
+            "pathName": "CoralAutoFR"
           }
         },
         {
@@ -29,7 +29,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralDToHumanPlayerB"
+                  "pathName": "CoralFToHumanPlayerB"
                 }
               },
               {
@@ -45,6 +45,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "CoralD",
+  "folder": "CoralF",
   "choreoAuto": false
 }

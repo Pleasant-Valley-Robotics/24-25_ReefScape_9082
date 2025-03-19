@@ -1,10 +1,7 @@
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.*;
-
 import java.util.function.Supplier;
 
-import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
@@ -16,7 +13,6 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -28,9 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
+import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
+import frc.robot.subsystems.LEDs.ShowPattern;
 
 /**
  * Class that extends the Phoenix 6 SwerveDrivetrain class and implements
@@ -42,7 +39,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private double m_lastSimTime;
     private Field2d field = new Field2d();
 
-
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
     /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
@@ -52,73 +48,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     /** Swerve request to apply during robot-centric path following */
     private final SwerveRequest.ApplyRobotSpeeds m_pathApplyRobotSpeeds = new SwerveRequest.ApplyRobotSpeeds();
-
-    /* Swerve requests to apply during SysId characterization */
-    private final SwerveRequest.SysIdSwerveTranslation m_translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
-    private final SwerveRequest.SysIdSwerveSteerGains m_steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
-    private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
-
-    /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
-    private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
-        new SysIdRoutine.Config(
-            null,        // Use default ramp rate (1 V/s)
-            Volts.of(4), // Reduce dynamic step voltage to 4 V to prevent brownout
-            null,        // Use default timeout (10 s)
-            // Log state with SignalLogger class
-            state -> SignalLogger.writeString("SysIdTranslation_State", state.toString())
-        ),
-        new SysIdRoutine.Mechanism(
-            output -> setControl(m_translationCharacterization.withVolts(output)),
-            null,
-            this
-        )
-    );
-
-    /* SysId routine for characterizing steer. This is used to find PID gains for the steer motors. */
-    private final SysIdRoutine m_sysIdRoutineSteer = new SysIdRoutine(
-        new SysIdRoutine.Config(
-            null,        // Use default ramp rate (1 V/s)
-            Volts.of(7), // Use dynamic voltage of 7 V
-            null,        // Use default timeout (10 s)
-            // Log state with SignalLogger class
-            state -> SignalLogger.writeString("SysIdSteer_State", state.toString())
-        ),
-        new SysIdRoutine.Mechanism(
-            volts -> setControl(m_steerCharacterization.withVolts(volts)),
-            null,
-            this
-        )
-    );
-
-    /*
-     * SysId routine for characterizing rotation.
-     * This is used to find PID gains for the FieldCentricFacingAngle HeadingController.
-     * See the documentation of SwerveRequest.SysIdSwerveRotation for info on importing the log to SysId.
-     */
-    private final SysIdRoutine m_sysIdRoutineRotation = new SysIdRoutine(
-        new SysIdRoutine.Config(
-            /* This is in radians per second², but SysId only supports "volts per second" */
-            Volts.of(Math.PI / 6).per(Second),
-            /* This is in radians per second, but SysId only supports "volts" */
-            Volts.of(Math.PI),
-            null, // Use default timeout (10 s)
-            // Log state with SignalLogger class
-            state -> SignalLogger.writeString("SysIdRotation_State", state.toString())
-        ),
-        new SysIdRoutine.Mechanism(
-            output -> {
-                /* output is actually radians per second, but SysId only supports "volts" */
-                setControl(m_rotationCharacterization.withRotationalRate(output.in(Volts)));
-                /* also log the requested output for SysId */
-                SignalLogger.writeDouble("Rotational_Rate", output.in(Volts));
-            },
-            null,
-            this
-        )
-    );
-
-    /* The SysId routine to test */
-    private SysIdRoutine m_sysIdRoutineToApply = m_sysIdRoutineTranslation;
 
     /**
      * Constructs a CTRE SwerveDrivetrain using the specified constants.
@@ -237,28 +166,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return run(() -> this.setControl(requestSupplier.get()));
     }
 
-    /**
-     * Runs the SysId Quasistatic test in the given direction for the routine
-     * specified by {@link #m_sysIdRoutineToApply}.
-     *
-     * @param direction Direction of the SysId Quasistatic test
-     * @return Command to run
-     */
-    public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-        return m_sysIdRoutineToApply.quasistatic(direction);
-    }
-
-    /**
-     * Runs the SysId Dynamic test in the given direction for the routine
-     * specified by {@link #m_sysIdRoutineToApply}.
-     *
-     * @param direction Direction of the SysId Dynamic test
-     * @return Command to run
-     */
-    public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-        return m_sysIdRoutineToApply.dynamic(direction);
-    }
-
     @Override
     public void periodic() {
         /*
@@ -278,6 +185,134 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 m_hasAppliedOperatorPerspective = true;
             });
         }
+        SmartDashboard.putNumber("Pose X", this.getState().Pose.getX());
+        SmartDashboard.putNumber("Pose Y", this.getState().Pose.getY());
+        SmartDashboard.putNumber("Pose Rot", this.getState().Pose.getRotation().getDegrees());
+        //Coral A Alignment
+        if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralAX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralAX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralAY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralAY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralARot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralARot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral B Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralBX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralBX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralBY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralBY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralBRot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralBRot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral C Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralCX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralCX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralCY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralCY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralCRot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralCRot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral D Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralDX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralDX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralDY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralDY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralDRot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralDRot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral E Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralEX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralEX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralEY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralEY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralERot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralERot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral F Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralFX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralFX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralFY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralFY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralFRot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralFRot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral G Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralGX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralGX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralGY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralGY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralGRot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralGRot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral H Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralHX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralHX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralHY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralHY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralHRot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralHRot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral I Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralIX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralIX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralIY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralIY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralIRot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralIRot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral J Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralJX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralJX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralJY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralJY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralJRot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralJRot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral K Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralKX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralKX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralKY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralKY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralKRot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralKRot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }
+        //Coral L Alignment
+        else if((this.getState().Pose.getX() >= Constants.coralAlignmentConstants.coralLX-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getX() <= Constants.coralAlignmentConstants.coralLX+Constants.coralAlignmentConstants.translativeTolerance)){
+            if((this.getState().Pose.getY() >= Constants.coralAlignmentConstants.coralLY-Constants.coralAlignmentConstants.translativeTolerance)&&(this.getState().Pose.getY() <= Constants.coralAlignmentConstants.coralLY+Constants.coralAlignmentConstants.translativeTolerance)){
+                if((this.getState().Pose.getRotation().getDegrees() >= Constants.coralAlignmentConstants.coralLRot-Constants.coralAlignmentConstants.rotationalTolerance)&&(this.getState().Pose.getRotation().getDegrees() <= Constants.coralAlignmentConstants.coralLRot+Constants.coralAlignmentConstants.rotationalTolerance)){
+                    if(RobotContainer.LEDs.showPattern != ShowPattern.solidGreen){
+                        RobotContainer.LEDs.showPattern = ShowPattern.solidGreen;
+                    }
+                }
+            }
+        }             
+        else{
+            if(RobotContainer.LEDs.showPattern == ShowPattern.solidGreen){
+                RobotContainer.LEDs.showPattern = ShowPattern.liftProgress;
+            }
+        }                           
         SmartDashboard.putData("Field", field);
         field.setRobotPose(this.getState().Pose);
     }

@@ -15,7 +15,6 @@ public class CoralEEAutoOuttake extends Command {
   private final double timeToStop;
   private final CoralEndEffector coralEE;
   private Timer timer;
-  private ShowPattern lastPattern;
   
   /**
    * This command will automatically drive the coral out of the end effector
@@ -42,6 +41,7 @@ public class CoralEEAutoOuttake extends Command {
     coralEE.setVoltage(0);
     timer.reset();
     timer.start();
+    RobotContainer.LEDs.showPattern = ShowPattern.solidWhite;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -51,8 +51,6 @@ public class CoralEEAutoOuttake extends Command {
   @Override
   public void execute() {
     coralEE.setVoltage(voltage);
-    lastPattern = RobotContainer.LEDs.showPattern; 
-    RobotContainer.LEDs.showPattern = ShowPattern.solidWhite; 
   }
 
   // Called once the command ends or is interrupted.
@@ -61,7 +59,9 @@ public class CoralEEAutoOuttake extends Command {
    */
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.LEDs.showPattern = lastPattern;
+    if(RobotContainer.LEDs.showPattern == ShowPattern.solidWhite){
+      RobotContainer.LEDs.showPattern = ShowPattern.liftProgress;
+    }
     coralEE.setVoltage(0);
   }
 

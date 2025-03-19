@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 public class UtilitySensors extends SubsystemBase {
   private AnalogInput coralDetector; 
-  private ShowPattern lastPattern;
+  private ShowPattern lastPattern = ShowPattern.liftProgress;
 //  private HttpCamera limelightfeed; 
 
   /** Creates a new UtilitySensors subsystem that sets up the camera tab and starts the feed so drivers can see the camera output, creates the sensor object, 
@@ -34,6 +34,7 @@ public class UtilitySensors extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Coral Detector Output", coralDetector.getValue());
+    SmartDashboard.putBoolean("Coral Detected", coralDetected());
   }
 
   /**
@@ -50,12 +51,17 @@ public class UtilitySensors extends SubsystemBase {
    */
   public boolean coralDetected(){
     if(coralDetector.getValue() > 250){
-      lastPattern = RobotContainer.LEDs.showPattern;
-      RobotContainer.LEDs.showPattern = ShowPattern.solidRed;
+      if (RobotContainer.LEDs.showPattern != ShowPattern.solidRed)
+      {
+        lastPattern = RobotContainer.LEDs.showPattern;
+        RobotContainer.LEDs.showPattern = ShowPattern.solidRed;
+      }
       return true;
     }
     else{
-      RobotContainer.LEDs.showPattern = lastPattern;
+      if(RobotContainer.LEDs.showPattern == ShowPattern.solidRed){
+        RobotContainer.LEDs.showPattern = lastPattern;
+      }
     return false;
     }
   }

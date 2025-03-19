@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.943954918032787,
-        "y": 2.7842725409836064
+        "x": 3.92925,
+        "y": 2.74775
       },
       "prevControl": {
-        "x": 3.475954918032787,
-        "y": 2.199272540983606
+        "x": 3.46125,
+        "y": 2.1627499999999995
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.75,
+    "maxVelocity": 0.8,
     "maxAcceleration": 0.6,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 58.60452886463206
+    "rotation": 57.33908727832619
   },
   "reversed": false,
   "folder": "CoralD",

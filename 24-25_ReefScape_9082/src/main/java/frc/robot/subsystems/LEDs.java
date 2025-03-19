@@ -37,7 +37,8 @@ public class LEDs extends SubsystemBase {
     teamColors,
     solidRed,
     liftProgress,
-    solidWhite
+    solidWhite,
+    solidGreen
   }
 
   public ShowPattern showPattern;
@@ -60,7 +61,7 @@ public class LEDs extends SubsystemBase {
   LEDPattern yellowLiftMaskPattern = LEDPattern.solid(yellowColor).atBrightness(Percent.of(10)).mask(LEDPattern.progressMaskLayer(() -> RobotContainer.elementLift.getEncoderPosition() / Constants.elementLiftConstants.liftMaxEncoder));
   LEDPattern redLiftMaskPattern = LEDPattern.solid(redColor).atBrightness(Percent.of(10)).mask(LEDPattern.progressMaskLayer(() -> RobotContainer.elementLift.getEncoderPosition() / Constants.elementLiftConstants.liftMaxEncoder));
   
-  LEDPattern defaultProgressPattern = LEDPattern.progressMaskLayer(() -> (20.0 / 100.0)).atBrightness(Percent.of(25)); 
+  
 
   LEDPattern blueBreathePattern = LEDPattern.solid(blueColor).breathe(Seconds.of(2/50));
   LEDPattern yellowBreathePattern = LEDPattern.solid(yellowColor).breathe(Seconds.of(2/50)); 
@@ -71,8 +72,9 @@ public class LEDs extends SubsystemBase {
   LEDPattern yellowScrollBreathePattern = LEDPattern.solid(yellowColor).breathe(Seconds.of(2)).scrollAtRelativeSpeed(Percent.per(Second).of(25)).atBrightness(Percent.of(25));
   LEDPattern whiteScrollBreathePattern = LEDPattern.solid(whiteColor).breathe(Seconds.of(2)).scrollAtRelativeSpeed(Percent.per(Second).of(25)).atBrightness(Percent.of(25));
 
-  LEDPattern stepFunnelPattern = LEDPattern.steps(Map.of(0, blueColor, (1/3), whiteColor, (1/3), yellowColor)).scrollAtRelativeSpeed(Percent.per(Second).of(25)).atBrightness(Percent.of(25)).breathe(Seconds.of(2/50)); 
-
+  LEDPattern defaultProgressPattern = LEDPattern.progressMaskLayer(() -> (20.0 / 100.0)).atBrightness(Percent.of(25)); 
+  LEDPattern stepFunnelPattern = LEDPattern.steps(Map.of(0.00, blueColor, 0.1111, whiteColor, 0.2222, yellowColor, .3333, blueColor, .4444 , whiteColor, .5555, yellowColor, .6666, blueColor, .7777, whiteColor, .8888, yellowColor )).scrollAtRelativeSpeed(Percent.per(Second).of(12.5)).atBrightness(Percent.of(20));//.breathe(Seconds.of(2.0)); 
+  LEDPattern offPattern = LEDPattern.kOff;
   private final AddressableLED led;
   private final AddressableLEDBuffer buffer;
 
@@ -93,11 +95,6 @@ public class LEDs extends SubsystemBase {
     led = new AddressableLED(0);
     //Entire LED strip had 3600 LEDS. 
     buffer = new AddressableLEDBuffer(100);
-
-    //This number will be 0, length being used/LEDSPerMeter. Gives the total number of LEDs on the strip. 
-   // leftBufferView = buffer.createView(0, 719); //First meter of LED strip
-   // rightBufferView = buffer.createView(720, 1439); //Second meter of LED strip. 
-    //unusedBufferView = buffer.createView(1440, 3599); //Unused section of the LED strip. 
 
     leftLiftBufferView = buffer.createView(0,16);
     middleLiftBufferView = buffer.createView(17,31);
@@ -132,21 +129,30 @@ public class LEDs extends SubsystemBase {
         solidRedPattern.applyTo(leftFunnelBufferView);
         solidRedPattern.applyTo(middleFunnelBufferView);
         solidRedPattern.applyTo(rightFunnelBufferView);
+        break;
       case liftProgress:
-        if (RobotContainer.elementLift.getEncoderPosition() > 300){
+        if (RobotContainer.elementLift.getEncoderPosition() > 253){
             solidGreenPattern.applyTo(middleLiftBufferView);
+        }
+        else{
+          offPattern.applyTo(middleLiftBufferView);
         }
         blueLiftMaskPattern.applyTo(leftLiftBufferView);
         yellowLiftMaskPattern.reversed().applyTo(rightLiftBufferView);
         stepFunnelPattern.applyTo(notLiftBufferView);
-      case solidWhite: {
+        break;
+      case solidWhite: 
         solidWhitePattern.applyTo(leftLiftBufferView);
         solidWhitePattern.applyTo(middleLiftBufferView);
         solidWhitePattern.applyTo(rightLiftBufferView);
+        solidWhitePattern.applyTo(betweenLiftAndFunnelBufferView);
         solidWhitePattern.applyTo(leftFunnelBufferView);
         solidWhitePattern.applyTo(middleFunnelBufferView);
         solidWhitePattern.applyTo(rightFunnelBufferView);
-      }
+      break;
+      case solidGreen:
+        solidGreenPattern.applyTo(buffer);
+      break;
     }  
 
     //make step to go blue, white, yellow

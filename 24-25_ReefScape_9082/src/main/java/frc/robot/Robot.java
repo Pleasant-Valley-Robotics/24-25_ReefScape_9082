@@ -23,8 +23,8 @@ public class Robot extends TimedRobot {
   private final RobotContainer m_robotContainer;
 
   private final boolean kUseLimelight = true;
-  private Matrix<N3,N1> visionStdDefault = VecBuilder.fill(0.1,0.1,999999);
-  private Matrix<N3,N1> visionStd = VecBuilder.fill(0.1,0.1,999999);
+  private Matrix<N3,N1> visionStdDefault = VecBuilder.fill(0.5,0.5,999999);
+  private Matrix<N3,N1> visionStd = VecBuilder.fill(0.5,0.5,999999);
   public Robot() {
     m_robotContainer = new RobotContainer();
     for (int port = 5800; port <= 5809; port++) {
@@ -45,19 +45,19 @@ public class Robot extends TimedRobot {
      * of how to use vision should be tuned per-robot and to the team's specification.
      */
     if (kUseLimelight) {
-      var driveState = m_robotContainer.drivetrain.getState();
+      var driveState = RobotContainer.drivetrain.getState();
       double headingDeg = driveState.Pose.getRotation().getDegrees();
       double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
 
-      LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
-      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-      if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0 && llMeasurement.avgTagDist < 5) {
+      LimelightHelpers.SetRobotOrientation("limelight", headingDeg, omegaRps, 0, 0, 0, 0);
+      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+      if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0 && llMeasurement.avgTagDist < 5 && ((llMeasurement.pose.getX()-RobotContainer.drivetrain.getState().Pose.getX()) < .1)&& ((llMeasurement.pose.getY()-RobotContainer.drivetrain.getState().Pose.getY()) < .1)) {
         visionStd = visionStdDefault.times(llMeasurement.avgTagDist);
         SmartDashboard.putNumber("visionStdX", visionStd.get(0,0));
         SmartDashboard.putNumber("visionStdY", visionStd.get(1,0));
         SmartDashboard.putNumber("visionStdHeading", visionStd.get(2,0));
         SmartDashboard.putNumber("llMeasurement avg tag dist", llMeasurement.avgTagDist);
-        m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, Utils.fpgaToCurrentTime(llMeasurement.timestampSeconds), visionStd);
+        RobotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, Utils.fpgaToCurrentTime(llMeasurement.timestampSeconds), visionStd);
       }
     }
   }
