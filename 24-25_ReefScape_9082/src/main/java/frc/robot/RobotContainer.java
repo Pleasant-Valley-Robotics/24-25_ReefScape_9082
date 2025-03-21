@@ -91,24 +91,14 @@ public class RobotContainer {
     private void configureBindings() {
         
         //Subsystem Default Commands        
-        drivetrain.setDefaultCommand( new RunCommand(() -> {
-            if(joystick.rightBumper().getAsBoolean()){
+        drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
-            drivetrain.applyRequest(() -> 
+            drivetrain.applyRequest(() ->
                 drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-                );
-            }
-            else {
-            // Drivetrain will execute this command periodically
-            drivetrain.applyRequest(() -> 
-            drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-            );
-            }  
-        }));
+            )
+        );
         
         //Element Lift handling
         elementLift.setDefaultCommand(new RunCommand(()->{
@@ -121,7 +111,7 @@ public class RobotContainer {
                     elementLift.setVoltage(-1);
                 }
                 else{
-                elementLift.setVoltage(-joystick2.getY()*12);    //Set power directly to the lift via the joystick y axis  //.07
+                elementLift.setVoltage(-joystick2.getY()*12);    //Set power directly to the lift via the joystick y axis
                 }
             }
             else{
@@ -140,13 +130,13 @@ public class RobotContainer {
 
         //Operator Joysticks
         new JoystickButton(joystick2, 1).whileTrue(new CoralEEAutoOuttake(coralEE, 1.0, 2));
+        new JoystickButton(joystick2, 7).whileTrue(new CoralEEAutoOuttake(coralEE, -1.0, 2));
         new JoystickButton(joystick2, 2).whileTrue(coralIntakeButtonCommand);
-        new JoystickButton(joystick2, 7).whileTrue(new CoralEEAutoOuttake(coralEE, -1.0,2));
         new JoystickButton(joystick2, 12).whileTrue(new RunCommand(()-> {elementLift.resetEncoder();}));
         new JoystickButton(joystick2, 3).whileTrue(new ElementLiftAutoHeight(elementLift, 26.0).repeatedly());
         new JoystickButton(joystick2, 4).whileTrue(new ElementLiftAutoHeight(elementLift, 38.5).repeatedly());
         new JoystickButton(joystick2,5).whileTrue(new ElementLiftAutoHeight(elementLift, 53.0).repeatedly());
-        new JoystickButton(joystick2, 6).whileTrue(new ElementLiftAutoHeight(elementLift, 77.0).repeatedly());
+        new JoystickButton(joystick2, 6).whileTrue(new ElementLiftAutoHeight(elementLift, 77).repeatedly());
     }
 
     public Command getAutonomousCommand() {

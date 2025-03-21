@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.598258196721312,
-        "y": 3.8511782786885242
+        "x": 8.163627049180327,
+        "y": 7.423514344262295
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.973008196721312,
-        "y": 6.737178278688525
+        "x": 7.060758196721311,
+        "y": 7.423514344262295
       },
       "isLocked": false,
-      "linkedName": "CoralG"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.2587090163934425,
-        "y": 7.051895491803278
+        "x": 2.361577868852459,
+        "y": 7.423514344262295
       },
       "prevControl": {
-        "x": 2.789459016393441,
-        "y": 6.164645491803279
+        "x": 4.231659836065574,
+        "y": 7.44748975409836
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "HumanPlayerStationA"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.8,
-    "maxAcceleration": 0.6,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -53.40891173260074
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "CoralG",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 179.75824709073189
+    "rotation": 180.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
