@@ -7,9 +7,9 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkFlexConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -17,15 +17,15 @@ import frc.robot.Constants.coralEEConstants;
 
 
 public class CoralEndEffector extends SubsystemBase {
-  private final SparkMax coralEE = new SparkMax(coralEEConstants.coralEECAN, MotorType.kBrushed);
-  private SparkMaxConfig coralEEConfig = new SparkMaxConfig();
+  private final SparkFlex coralEE = new SparkFlex(coralEEConstants.coralEECAN, MotorType.kBrushless);
+  private SparkFlexConfig coralEEConfig = new SparkFlexConfig();
 
   /** Creates a new CoralEndEffector for intaking coral, depositing coral to score, logging coral velocity, and logging applied output 
    * to coral(the voltage the motor's running at). 
   */
   public CoralEndEffector() {
         coralEEConfig
-    .inverted(true)
+    .inverted(false)
     .idleMode(IdleMode.kCoast);
   coralEE.configure(coralEEConfig,ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }

@@ -67,7 +67,7 @@ public class CoralEEAutoIntake extends Command {
      * manner
      */
     elementLift.goToHeight(Constants.elementLiftConstants.humanPlayerStationHeight);
-    coralEE.setVoltage(6);
+    coralEE.setVoltage(1);
   }
 
   // Called once the command ends or is interrupted.

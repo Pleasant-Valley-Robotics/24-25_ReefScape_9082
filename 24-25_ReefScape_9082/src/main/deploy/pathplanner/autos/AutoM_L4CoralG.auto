@@ -15,6 +15,12 @@
           "data": {
             "name": "ElementLiftAutoHeightL4"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralEEAutoOuttake"
+          }
         }
       ]
     }
