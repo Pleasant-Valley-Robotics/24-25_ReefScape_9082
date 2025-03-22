@@ -96,8 +96,8 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-joystick.getLeftY() * drivingScalarConstant * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-joystick.getLeftX() *drivingScalarConstant * MaxSpeed) // Drive left with negative X (left)
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
@@ -129,7 +129,12 @@ public class RobotContainer {
         //Joystick 1 button bindings:
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
-        
+        joystick.rightBumper().whileTrue(
+            drivetrain.applyRequest(() ->
+            drive.withVelocityX(-joystick.getLeftY() * 0.5 * MaxSpeed) // Drive forward with negative Y (forward)
+                .withVelocityY(-joystick.getLeftX() * 0.5 * MaxSpeed) // Drive left with negative X (left)
+                .withRotationalRate(-joystick.getRightX() * 0.5 * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        ));
 
         //Operator Joysticks
         new JoystickButton(joystick2, 1).whileTrue(new CoralEEAutoOuttake(coralEE, 1.0, 2));
