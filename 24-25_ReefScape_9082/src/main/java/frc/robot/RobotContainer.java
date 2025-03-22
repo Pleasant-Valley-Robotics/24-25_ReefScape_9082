@@ -62,10 +62,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("CoralEEAutoIntake", new CoralEEAutoIntake(utilitySensors, coralEE, elementLift));
         NamedCommands.registerCommand("CoralEEAutoOuttake", new CoralEEAutoOuttake(coralEE, 1.0, 3.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightHumanPlayer", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.humanPlayerStationHeight));
-        NamedCommands.registerCommand("ElementLiftAutoHeightL1", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.coralL1Height));
-        NamedCommands.registerCommand("ElementLiftAutoHeightL2", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.coralL2Height));
-        NamedCommands.registerCommand("ElementLiftAutoHeightL3", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.coralL3Height));
-        NamedCommands.registerCommand("ElementLiftAutoHeightL4", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.coralL4Height));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL1", new ElementLiftAutoHeight(elementLift, 26.0));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL2", new ElementLiftAutoHeight(elementLift, 34.0));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL3", new ElementLiftAutoHeight(elementLift, 53.0));
+        NamedCommands.registerCommand("ElementLiftAutoHeightL4", new ElementLiftAutoHeight(elementLift, 77.0));
         
         // For convenience a programmer could change this when going to competition.
         boolean isCompetition = true;

@@ -82,8 +82,8 @@ public final class Constants {
      * 6. Subtract the distance from the ground to the initial height of the end-effector
      * 7. Take the resulting distance and divide it by the measured encoders - this is the encoderToInches value
      */
-    public static final double measuredDistance = 76.0;
-    public static final double measuredEncoders = 259.5;
+    public static final double measuredDistance = 42.5;
+    public static final double measuredEncoders = 47.0;
     public static final double liftOffset = 18.125;
     public static final double encoderToInches = (measuredDistance-liftOffset)/measuredEncoders;
     /*
@@ -92,7 +92,7 @@ public final class Constants {
      * i.e. we want to be going at 2V when we are 12 inches away, we would have 2V/12in
      * We use 1V / 2 inches of error, from experimenting
      */
-    public static final double liftP = 1.0;
+    public static final double liftP = 2.0;
     /*
      * an Integral Gain value would account for gravity pulling the lift down beyond what the motor is supplying voltage for
      * i.e. steady state error
