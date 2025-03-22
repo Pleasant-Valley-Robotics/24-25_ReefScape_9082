@@ -110,7 +110,7 @@ public final class Constants {
     //The minimum voltage that the element lift can have during a PID Controlled system
     public static final double liftMinVoltage = 1.5;
     
-    public static final double liftMaxEncoder = 266.0;
+    public static final double liftMaxEncoder = 285.0;
 
     public static final double liftMinEncoder = -10.0;
     
