@@ -21,9 +21,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
-  private final boolean kUseLimelight = false;
-  private Matrix<N3,N1> visionStdDefault = VecBuilder.fill(0.5,0.5,999999);
-  private Matrix<N3,N1> visionStd = VecBuilder.fill(0.5,0.5,999999);
+  private final boolean kUseLimelight = true;
+  private Matrix<N3,N1> visionStdDefault = VecBuilder.fill(0.3,0.3,999999);
+  private Matrix<N3,N1> visionStd = VecBuilder.fill(0.3,0.3,999999);
   public Robot() {
     m_robotContainer = new RobotContainer();
     for (int port = 5800; port <= 5809; port++) {
@@ -45,17 +45,33 @@ public class Robot extends TimedRobot {
      */
     if (kUseLimelight) {
       var driveState = RobotContainer.drivetrain.getState();
-      double headingDeg = driveState.Pose.getRotation().getDegrees();
-      double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
+      double headingDeg = - driveState.Pose.getRotation().getDegrees(); //WE NEED TO SEE IF THIS CHANGES BASED ON OUR AUTO START LOCATION
+      //We can test the above line in the stands by running blue auto on the cart and verifying whether or not this value changes
 
-      LimelightHelpers.SetRobotOrientation("limelight", headingDeg, omegaRps, 0, 0, 0, 0);
-      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+      double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
+      double yawRate = Units.radiansToDegrees(driveState.Speeds.omegaRadiansPerSecond); //We need to test if this changes CW+ or CCW+
+
+      /*
+       * Field Space (FRC) (Used by map generator)
+      3d Cartesian Coordinate System with (0,0,0) located at the center of the field
+      X+ → Points along the long side of the field
+      Y+ → Points up the short side of the field
+      Z+ → Points towards the sky
+      Right-handed. Positive theta results in counterclockwise rotation from positive outside perspective
+       */
+
+      LimelightHelpers.SetRobotOrientation("limelight", headingDeg, yawRate, 0, 0, 0, 0);
+      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
       if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0 && llMeasurement.avgTagDist < 5 && ((llMeasurement.pose.getX()-RobotContainer.drivetrain.getState().Pose.getX()) < .1)&& ((llMeasurement.pose.getY()-RobotContainer.drivetrain.getState().Pose.getY()) < .1)) {
         visionStd = visionStdDefault.times(llMeasurement.avgTagDist);
         SmartDashboard.putNumber("visionStdX", visionStd.get(0,0));
         SmartDashboard.putNumber("visionStdY", visionStd.get(1,0));
         SmartDashboard.putNumber("visionStdHeading", visionStd.get(2,0));
         SmartDashboard.putNumber("llMeasurement avg tag dist", llMeasurement.avgTagDist);
+        SmartDashboard.putNumber("Limelight Degrees Input", headingDeg);
+        
+        //We would like to show which april tag IDs onto SmartDashboard here
+
         RobotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, Utils.fpgaToCurrentTime(llMeasurement.timestampSeconds), visionStd);
       }
     }
