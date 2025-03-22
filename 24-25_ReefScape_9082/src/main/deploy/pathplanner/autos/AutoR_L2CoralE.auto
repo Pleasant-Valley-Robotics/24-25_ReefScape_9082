@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CoralJAutoL"
+            "pathName": "CoralEAutoR"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ElementLiftAutoHeightL4"
+            "name": "ElementLiftAutoHeightL2"
           }
         },
         {
@@ -29,7 +29,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "CoralJToHumanPlayerA"
+                  "pathName": "CoralEToHumanPlayerB"
                 }
               },
               {
@@ -45,6 +45,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "CoralJ",
+  "folder": "CoralE",
   "choreoAuto": false
 }
