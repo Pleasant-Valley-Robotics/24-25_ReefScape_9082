@@ -59,16 +59,17 @@ public class Robot extends TimedRobot {
       Z+ → Points towards the sky
       Right-handed. Positive theta results in counterclockwise rotation from positive outside perspective
        */
-
-      LimelightHelpers.SetRobotOrientation("limelight", headingDeg, yawRate, 0, 0, 0, 0);
+      SmartDashboard.putNumber("Limelight Degrees Input", headingDeg);
+      SmartDashboard.putNumber("Limelight YawRate Input", yawRate);
+      LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
       var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-      if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0 && llMeasurement.avgTagDist < 5 && ((llMeasurement.pose.getX()-RobotContainer.drivetrain.getState().Pose.getX()) < .1)&& ((llMeasurement.pose.getY()-RobotContainer.drivetrain.getState().Pose.getY()) < .1)) {
+      if (llMeasurement != null && llMeasurement.tagCount > 0 && llMeasurement.avgTagDist < 5 && ((llMeasurement.pose.getX()-RobotContainer.drivetrain.getState().Pose.getX()) < .1)&& ((llMeasurement.pose.getY()-RobotContainer.drivetrain.getState().Pose.getY()) < .1)) {
         visionStd = visionStdDefault.times(llMeasurement.avgTagDist);
         SmartDashboard.putNumber("visionStdX", visionStd.get(0,0));
         SmartDashboard.putNumber("visionStdY", visionStd.get(1,0));
         SmartDashboard.putNumber("visionStdHeading", visionStd.get(2,0));
         SmartDashboard.putNumber("llMeasurement avg tag dist", llMeasurement.avgTagDist);
-        SmartDashboard.putNumber("Limelight Degrees Input", headingDeg);
+        
         
         //We would like to show which april tag IDs onto SmartDashboard here
 
