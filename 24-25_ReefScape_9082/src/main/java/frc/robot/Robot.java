@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
       double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
 
       LimelightHelpers.SetRobotOrientation("limelight", headingDeg, omegaRps, 0, 0, 0, 0);
-      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+      var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
       if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0 && llMeasurement.avgTagDist < 5 && ((llMeasurement.pose.getX()-RobotContainer.drivetrain.getState().Pose.getX()) < .1)&& ((llMeasurement.pose.getY()-RobotContainer.drivetrain.getState().Pose.getY()) < .1)) {
         visionStd = visionStdDefault.times(llMeasurement.avgTagDist);
         SmartDashboard.putNumber("visionStdX", visionStd.get(0,0));
