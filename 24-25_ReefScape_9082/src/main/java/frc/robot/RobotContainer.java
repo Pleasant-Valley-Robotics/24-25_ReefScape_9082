@@ -123,7 +123,12 @@ public class RobotContainer {
         //Joystick 1 button bindings:
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
         joystick.b().whileTrue(drivetrain.applyRequest(() -> point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))));
-        
+        joystick.rightBumper().whileTrue(
+            drivetrain.applyRequest(() ->
+            drive.withVelocityX(-joystick.getLeftY() * 0.5 * MaxSpeed) // Drive forward with negative Y (forward)
+                .withVelocityY(-joystick.getLeftX() * 0.5 * MaxSpeed) // Drive left with negative X (left)
+                .withRotationalRate(-joystick.getRightX() * 0.5 * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        ));
 
         //Operator Joysticks
         new JoystickButton(joystick2, 1).whileTrue(new CoralEEAutoOuttake(coralEE, 1.0, 2));
