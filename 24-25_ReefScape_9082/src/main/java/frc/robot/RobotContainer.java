@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.elementLiftConstants;
@@ -34,7 +33,6 @@ public class RobotContainer {
     private double drivingScalarConstant = 1;
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
-
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.RobotCentric drive = new SwerveRequest.RobotCentric()
@@ -61,7 +59,6 @@ public class RobotContainer {
     Command coralIntakeHeight = new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.humanPlayerStationHeight);
     SequentialCommandGroup coralIntakeButtonCommand = new SequentialCommandGroup(coralIntakeHeight, coralIntake);
 
-
     public RobotContainer() {
         NamedCommands.registerCommand("CoralEEAutoIntake", new CoralEEAutoIntake(utilitySensors, coralEE, elementLift));
         NamedCommands.registerCommand("CoralEEAutoOuttake", new CoralEEAutoOuttake(coralEE, 1.0, 3.0));
@@ -71,8 +68,6 @@ public class RobotContainer {
         NamedCommands.registerCommand("ElementLiftAutoHeightL3", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.coralL3Height));
         NamedCommands.registerCommand("ElementLiftAutoHeightL4", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.coralL4Height));
         
-        
-
         // For convenience a programmer could change this when going to competition.
         boolean isCompetition = true;
 
@@ -107,17 +102,17 @@ public class RobotContainer {
             
             if(Math.abs(joystick2.getY()) > 0.065){  //Joystick deadzone of 0.065
                 if(elementLift.getEncoderPosition() < elementLiftConstants.liftMinEncoder){
-                    elementLift.setVoltage(1);
+                    elementLift.setVoltage(1.0);
                 }
                 else if(elementLift.getEncoderPosition() > elementLiftConstants.liftMaxEncoder){
-                    elementLift.setVoltage(-1);
+                    elementLift.setVoltage(-1.0);
                 }
                 else{
-                elementLift.setVoltage(-joystick2.getY()*12);    //Set power directly to the lift via the joystick y axis
+                elementLift.setVoltage(-joystick2.getY()*12.0);    //Set power directly to the lift via the joystick y axis
                 }
             }
             else{
-                elementLift.setVoltage(0);
+                elementLift.setVoltage(0.0);
             }
             
         }, elementLift));
@@ -139,7 +134,7 @@ public class RobotContainer {
         new JoystickButton(joystick2, 3).whileTrue(new ElementLiftAutoHeight(elementLift, 26.0).repeatedly());
         new JoystickButton(joystick2, 4).whileTrue(new ElementLiftAutoHeight(elementLift, 38.5).repeatedly());
         new JoystickButton(joystick2,5).whileTrue(new ElementLiftAutoHeight(elementLift, 53.0).repeatedly());
-        new JoystickButton(joystick2, 6).whileTrue(new ElementLiftAutoHeight(elementLift, 77).repeatedly());
+        new JoystickButton(joystick2, 6).whileTrue(new ElementLiftAutoHeight(elementLift, 77.0).repeatedly());
     }
 
     public Command getAutonomousCommand() {
