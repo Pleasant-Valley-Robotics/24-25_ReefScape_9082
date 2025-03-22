@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
-  private final boolean kUseLimelight = true;
+  private final boolean kUseLimelight = false;
   private Matrix<N3,N1> visionStdDefault = VecBuilder.fill(0.3,0.3,999999);
   private Matrix<N3,N1> visionStd = VecBuilder.fill(0.3,0.3,999999);
   public Robot() {
