@@ -82,6 +82,10 @@ public final class Constants {
      * 6. Subtract the distance from the ground to the initial height of the end-effector
      * 7. Take the resulting distance and divide it by the measured encoders - this is the encoderToInches value
      */
+
+     /*
+      * This is a two-point calibration method
+      */
     public static final double measuredDistance = 42.5;
     public static final double measuredEncoders = 47.0;
     public static final double liftOffset = 18.125;
