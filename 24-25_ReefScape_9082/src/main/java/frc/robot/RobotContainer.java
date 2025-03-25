@@ -59,14 +59,17 @@ public class RobotContainer {
     Command coralIntakeHeight = new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.humanPlayerStationHeight);
     SequentialCommandGroup coralIntakeButtonCommand = new SequentialCommandGroup(coralIntakeHeight, coralIntake);
     Command autoHeight = new CoralLevel2AutoHeight(elementLift, utilitySensors, coralEE);
+
     public RobotContainer() {
         NamedCommands.registerCommand("CoralEEAutoIntake", new CoralEEAutoIntake(utilitySensors, coralEE, elementLift));
         NamedCommands.registerCommand("CoralEEAutoOuttake", new CoralEEAutoOuttake(coralEE, 1.5, 3.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightHumanPlayer", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.humanPlayerStationHeight));
         NamedCommands.registerCommand("ElementLiftAutoHeightL1", new ElementLiftAutoHeight(elementLift, 26.0));
-        NamedCommands.registerCommand("ElementLiftAutoHeightL2", new ElementLiftAutoHeight(elementLift, 34.0));
+        //NamedCommands.registerCommand("ElementLiftAutoHeightL2", new ElementLiftAutoHeight(elementLift, 34.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightL3", new ElementLiftAutoHeight(elementLift, 53.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightL4", new ElementLiftAutoHeight(elementLift, 77.0));
+        
+        NamedCommands.registerCommand("CoralLevel2AutoHeight", new CoralLevel2AutoHeight(elementLift, utilitySensors, coralEE));
         
         // For convenience a programmer could change this when going to competition.
         boolean isCompetition = true;
@@ -138,12 +141,11 @@ public class RobotContainer {
         new JoystickButton(joystick2, 12).whileTrue(new RunCommand(()-> {elementLift.resetEncoder();}));
         new JoystickButton(joystick2, 3).whileTrue(new ElementLiftAutoHeight(elementLift, 26.0).repeatedly());
         new JoystickButton(joystick2, 4).whileTrue(new ElementLiftAutoHeight(elementLift, 38.5).repeatedly());
-        new JoystickButton(joystick2,5).whileTrue(new ElementLiftAutoHeight(elementLift, 53.0).repeatedly());
+        new JoystickButton(joystick2, 5).whileTrue(new ElementLiftAutoHeight(elementLift, 53.0).repeatedly());
         new JoystickButton(joystick2, 6).whileTrue(new ElementLiftAutoHeight(elementLift, 77.0).repeatedly());
     }
 
     public Command getAutonomousCommand() {
-        //return autoChooser.getSelected();
-        return autoHeight;
+        return autoChooser.getSelected();
     }
 }
