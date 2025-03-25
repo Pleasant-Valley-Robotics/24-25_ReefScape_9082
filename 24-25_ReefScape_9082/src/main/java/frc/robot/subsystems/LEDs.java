@@ -64,12 +64,12 @@ public class LEDs extends SubsystemBase {
     led = new AddressableLED(0);
     buffer = new AddressableLEDBuffer(100);
     leftLiftBufferView = buffer.createView(0,16);
-    middleLiftBufferView = buffer.createView(17,31);
-    rightLiftBufferView = buffer.createView(32, 44);
-    betweenLiftAndFunnelBufferView = buffer.createView(45, 55);
-    leftFunnelBufferView = buffer.createView(56, 73);
-    middleFunnelBufferView = buffer.createView(74, 79);
-    rightFunnelBufferView = buffer.createView(80, 99);
+    middleLiftBufferView = buffer.createView(17,33);
+    rightLiftBufferView = buffer.createView(34, 49);
+    betweenLiftAndFunnelBufferView = buffer.createView(50, 58);
+    leftFunnelBufferView = buffer.createView(59, 77);
+    middleFunnelBufferView = buffer.createView(78, 84);
+    rightFunnelBufferView = buffer.createView(85, 99);
     notLiftBufferView = buffer.createView(45,99);
 
     led.setLength(100);
@@ -89,7 +89,7 @@ public class LEDs extends SubsystemBase {
         solidRedPattern.applyTo(rightFunnelBufferView);
         break;
       case liftProgress:
-        if (RobotContainer.elementLift.getEncoderPosition() > 253){
+      if (RobotContainer.elementLift.getEncoderPosition() > 253){
             solidGreenPattern.applyTo(middleLiftBufferView);
         }
         else{
@@ -106,7 +106,7 @@ public class LEDs extends SubsystemBase {
         solidWhitePattern.applyTo(betweenLiftAndFunnelBufferView);
         solidWhitePattern.applyTo(leftFunnelBufferView);
         solidWhitePattern.applyTo(middleFunnelBufferView);
-        solidWhitePattern.applyTo(rightFunnelBufferView);
+        solidWhitePattern.applyTo(rightFunnelBufferView); 
       break;
       case solidGreen:
         solidGreenPattern.applyTo(buffer);

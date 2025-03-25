@@ -9,9 +9,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.LEDs.ShowPattern;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
+
 
 public class UtilitySensors extends SubsystemBase {
   private AnalogInput coralDetector; 
+  private AnalogInput level2HeightDetector; 
   private ShowPattern lastPattern = ShowPattern.liftProgress;
 
   /** Creates a new UtilitySensors subsystem that sets up the camera tab and starts the feed so drivers can see the camera output, creates the sensor object, 
@@ -19,6 +22,7 @@ public class UtilitySensors extends SubsystemBase {
   */
   public UtilitySensors() {
     coralDetector = new AnalogInput(0);
+    level2HeightDetector = new AnalogInput(1);
   }
 
   /**
@@ -28,6 +32,8 @@ public class UtilitySensors extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Coral Detector Output", coralDetector.getValue());
     SmartDashboard.putBoolean("Coral Detected", coralDetected());
+    SmartDashboard.putNumber("level2HeightDetector Output", level2HeightDetector.getValue());
+    SmartDashboard.putBoolean("Level2 detected", Level2HeightDetected());
   }
 
   /**
@@ -57,5 +63,14 @@ public class UtilitySensors extends SubsystemBase {
       }
     return false;
     }
+  }
+
+  public boolean Level2HeightDetected(){
+   if (level2HeightDetector.getValue() > 700) {
+    return true;
+   }
+   else {
+    return false; 
+   }
   }
 }

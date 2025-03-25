@@ -13,13 +13,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ElementLiftAutoHeightL2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "CoralEEAutoOuttake"
+            "name": "CoralLevel2AutoHeight"
           }
         },
         {
