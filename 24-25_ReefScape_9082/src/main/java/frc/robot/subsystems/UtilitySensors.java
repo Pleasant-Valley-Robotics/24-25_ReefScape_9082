@@ -14,15 +14,15 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class UtilitySensors extends SubsystemBase {
   private AnalogInput coralDetector; 
+  private AnalogInput level2HeightDetector; 
   private ShowPattern lastPattern = ShowPattern.liftProgress;
-  private DigitalInput Level2LimitSwitch;
 
   /** Creates a new UtilitySensors subsystem that sets up the camera tab and starts the feed so drivers can see the camera output, creates the sensor object, 
    * can return the value of a REV modern optical sensor to see if a coral is in the intake , and logs the distance returned from the sensor.
   */
   public UtilitySensors() {
     coralDetector = new AnalogInput(0);
-    Level2LimitSwitch = new DigitalInput(0);
+    level2HeightDetector = new AnalogInput(1);
   }
 
   /**
@@ -32,7 +32,8 @@ public class UtilitySensors extends SubsystemBase {
   public void periodic() {
     SmartDashboard.putNumber("Coral Detector Output", coralDetector.getValue());
     SmartDashboard.putBoolean("Coral Detected", coralDetected());
-    SmartDashboard.putBoolean("Level 2 Limit Switch", Level2HeightDetected());
+    SmartDashboard.putNumber("level2HeightDetector Output", level2HeightDetector.getValue());
+    SmartDashboard.putBoolean("Level2 detected", Level2HeightDetected());
   }
 
   /**
@@ -65,6 +66,11 @@ public class UtilitySensors extends SubsystemBase {
   }
 
   public boolean Level2HeightDetected(){
-    return Level2LimitSwitch.get();
+   if (level2HeightDetector.getValue() > 700) {
+    return true;
+   }
+   else {
+    return false; 
+   }
   }
 }

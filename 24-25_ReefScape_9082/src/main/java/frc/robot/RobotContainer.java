@@ -21,6 +21,7 @@ import frc.robot.Constants.elementLiftConstants;
 import frc.robot.commands.CoralEEAutoIntake;
 import frc.robot.commands.CoralEEAutoOuttake;
 import frc.robot.commands.ElementLiftAutoHeight;
+import frc.robot.commands.CoralLevel2AutoHeight;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.CoralEndEffector;
@@ -57,10 +58,10 @@ public class RobotContainer {
     Command coralIntake = new CoralEEAutoIntake(utilitySensors, coralEE,elementLift);
     Command coralIntakeHeight = new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.humanPlayerStationHeight);
     SequentialCommandGroup coralIntakeButtonCommand = new SequentialCommandGroup(coralIntakeHeight, coralIntake);
-
+    Command autoHeight = new CoralLevel2AutoHeight(elementLift, utilitySensors, coralEE);
     public RobotContainer() {
         NamedCommands.registerCommand("CoralEEAutoIntake", new CoralEEAutoIntake(utilitySensors, coralEE, elementLift));
-        NamedCommands.registerCommand("CoralEEAutoOuttake", new CoralEEAutoOuttake(coralEE, 1.0, 3.0));
+        NamedCommands.registerCommand("CoralEEAutoOuttake", new CoralEEAutoOuttake(coralEE, 1.5, 3.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightHumanPlayer", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.humanPlayerStationHeight));
         NamedCommands.registerCommand("ElementLiftAutoHeightL1", new ElementLiftAutoHeight(elementLift, 26.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightL2", new ElementLiftAutoHeight(elementLift, 34.0));
@@ -131,8 +132,8 @@ public class RobotContainer {
         ));
 
         //Operator Joysticks
-        new JoystickButton(joystick2, 1).whileTrue(new CoralEEAutoOuttake(coralEE, 1.0, 2));
-        new JoystickButton(joystick2, 7).whileTrue(new CoralEEAutoOuttake(coralEE, -1.0, 2));
+        new JoystickButton(joystick2, 1).whileTrue(new CoralEEAutoOuttake(coralEE, 1.35, 2));
+        new JoystickButton(joystick2, 7).whileTrue(new CoralEEAutoOuttake(coralEE, -1.35, 2));
         new JoystickButton(joystick2, 2).whileTrue(coralIntakeButtonCommand);
         new JoystickButton(joystick2, 12).whileTrue(new RunCommand(()-> {elementLift.resetEncoder();}));
         new JoystickButton(joystick2, 3).whileTrue(new ElementLiftAutoHeight(elementLift, 26.0).repeatedly());
@@ -142,6 +143,7 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
+        //return autoChooser.getSelected();
+        return autoHeight;
     }
 }
