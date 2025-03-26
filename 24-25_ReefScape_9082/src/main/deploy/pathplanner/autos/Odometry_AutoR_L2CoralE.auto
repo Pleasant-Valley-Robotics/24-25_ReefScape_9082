@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CoralGAutoM"
+            "pathName": "Odometry_CoralEAutoR"
           }
         },
         {
@@ -15,11 +15,24 @@
           "data": {
             "name": "CoralLevel2AutoHeight"
           }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElementLiftAutoHeightHumanPlayer"
+                }
+              }
+            ]
+          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "CoralG",
+  "folder": "CoralE",
   "choreoAuto": false
 }

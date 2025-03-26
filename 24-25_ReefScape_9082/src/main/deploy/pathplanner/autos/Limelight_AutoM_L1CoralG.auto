@@ -1,0 +1,25 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Limelight_CoralGAutoM"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralLevel2AutoHeight"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "CoralG",
+  "choreoAuto": false
+}
