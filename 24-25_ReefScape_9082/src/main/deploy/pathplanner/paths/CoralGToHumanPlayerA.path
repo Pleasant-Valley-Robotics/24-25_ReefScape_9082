@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.909938524590164,
-        "y": 3.8511782786885242
+        "x": 5.933913934426228,
+        "y": 3.9350922131147543
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.284688524590164,
-        "y": 6.737178278688525
+        "x": 7.308663934426229,
+        "y": 6.821092213114754
       },
       "isLocked": false,
       "linkedName": "CoralG"
@@ -48,7 +48,7 @@
   "folder": "CoralG",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -165.06858282186244
+    "rotation": -158.0088700828228
   },
   "useDefaultConstraints": true
 }
