@@ -172,7 +172,7 @@ public class TunerConstants {
 
     //Standard Deviation arrays
     private static final Matrix<N3,N1> odometryStd = VecBuilder.fill(0.25,0.25,0.1);
-    private static final Matrix<N3,N1> visionStd = VecBuilder.fill(0.1,0.1,999999);
+    private static final Matrix<N3,N1> visionStd = VecBuilder.fill(0.1,0.1,9999999);
 
 
     public static final SwerveModuleConstants<TalonFXConfiguration, TalonFXConfiguration, CANcoderConfiguration> FrontLeft =

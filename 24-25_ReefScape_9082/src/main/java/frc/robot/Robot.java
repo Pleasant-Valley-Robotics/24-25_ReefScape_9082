@@ -21,7 +21,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private final RobotContainer m_robotContainer;
-  private final boolean kUseLimelight = false;
+  private final boolean kUseLimelight = true;
   private Matrix<N3,N1> visionStdDefault = VecBuilder.fill(0.3,0.3,999999);
   private Matrix<N3,N1> visionStd = VecBuilder.fill(0.3,0.3,999999);
   public Robot() {
@@ -45,10 +45,10 @@ public class Robot extends TimedRobot {
      */
     if (kUseLimelight) {
       var driveState = RobotContainer.drivetrain.getState();
-      double headingDeg = - driveState.Pose.getRotation().getDegrees(); //WE NEED TO SEE IF THIS CHANGES BASED ON OUR AUTO START LOCATION
+      double headingDeg = driveState.Pose.getRotation().getDegrees(); //WE NEED TO SEE IF THIS CHANGES BASED ON OUR AUTO START LOCATION
       //We can test the above line in the stands by running blue auto on the cart and verifying whether or not this value changes
 
-      double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
+      //double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
       double yawRate = Units.radiansToDegrees(driveState.Speeds.omegaRadiansPerSecond); //We need to test if this changes CW+ or CCW+
 
       /*
@@ -61,9 +61,11 @@ public class Robot extends TimedRobot {
        */
       SmartDashboard.putNumber("Limelight Degrees Input", headingDeg);
       SmartDashboard.putNumber("Limelight YawRate Input", yawRate);
+      
+
       LimelightHelpers.SetRobotOrientation("limelight", headingDeg, 0, 0, 0, 0, 0);
       var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
-      if (llMeasurement != null && llMeasurement.tagCount > 0 && llMeasurement.avgTagDist < 5 && ((llMeasurement.pose.getX()-RobotContainer.drivetrain.getState().Pose.getX()) < .1)&& ((llMeasurement.pose.getY()-RobotContainer.drivetrain.getState().Pose.getY()) < .1)) {
+      if (llMeasurement != null && llMeasurement.tagCount > 0 && llMeasurement.avgTagDist < 5 /*&& ((llMeasurement.pose.getX()-RobotContainer.drivetrain.getState().Pose.getX()) < .1)&& ((llMeasurement.pose.getY()-RobotContainer.drivetrain.getState().Pose.getY()) < .1)*/) {
         visionStd = visionStdDefault.times(llMeasurement.avgTagDist);
         SmartDashboard.putNumber("visionStdX", visionStd.get(0,0));
         SmartDashboard.putNumber("visionStdY", visionStd.get(1,0));
