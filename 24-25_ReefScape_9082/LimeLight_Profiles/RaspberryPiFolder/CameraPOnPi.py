@@ -25,8 +25,8 @@ def main():
 
     #Start detecting the logitechC920 camera on port 0
     logitechC920 = CameraServer.startAutomaticCapture(0)
-    logitechC920.setFPS(30)
-    logitechC920.setResolution(640,480)
+    logitechC920.setFPS(20)
+    logitechC920.setResolution(320,240)
 
     # Setup camera streams for processing video
     input_stream = CameraServer.getVideo()
@@ -53,8 +53,8 @@ def main():
 
         frame_time, input_img = input_stream.grabFrame(img)
         output_img = np.copy(input_img)
-        output_img = cv2.line(output_img, (400,0),(400, 240),(255,0,0),5)
-        output_img = cv2.line(output_img, (275,0), (275, 240), (255,0,0),5)
+        output_img = cv2.line(output_img, (200,0),(200, 120),(255,0,0),5)
+        output_img = cv2.line(output_img, (138,0), (138, 120), (255,0,0),5)
         output_img = cv2.flip(output_img,0)
         
         # Notify output of error and skip iteration 	
