@@ -53,11 +53,11 @@ def main():
 
         frame_time, input_img = input_stream.grabFrame(img)
         output_img = np.copy(input_img)
-        output_img = cv2.line(output_img, (340,0),(340, 240),(255,0,0),5)
-        output_img = cv2.line(output_img, (300,0), (300, 240), (255,0,0),5)
+        output_img = cv2.line(output_img, (400,0),(400, 240),(255,0,0),5)
+        output_img = cv2.line(output_img, (275,0), (275, 240), (255,0,0),5)
         output_img = cv2.flip(output_img,0)
         
-        # Notify output of error and skip iteration
+        # Notify output of error and skip iteration 	
         if frame_time == 0:
             output_stream.notifyError(input_stream.getError())
             continue
