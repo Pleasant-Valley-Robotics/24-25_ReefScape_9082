@@ -66,7 +66,7 @@ public class UtilitySensors extends SubsystemBase {
   }
 
   public boolean Level2HeightDetected(){
-   if (level2HeightDetector.getValue() > 700) {
+   if (level2HeightDetector.getValue() > 300) {
     return true;
    }
    else {
