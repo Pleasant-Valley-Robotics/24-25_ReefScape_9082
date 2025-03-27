@@ -79,9 +79,9 @@ public class RobotContainer {
         // competition as defined by the programmer
         autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(
             (stream) -> isCompetition
-            ? stream.filter(auto -> auto.getName().startsWith("Auto"))
+            ? stream.filter(auto -> auto.getName().startsWith("Lime"))
             : stream
-        );
+        );  
 
         SmartDashboard.putData("Auto Mode", autoChooser);
         drivetrain.registerTelemetry(logger::telemeterize);
