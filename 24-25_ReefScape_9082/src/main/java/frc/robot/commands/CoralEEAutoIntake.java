@@ -66,8 +66,8 @@ public class CoralEEAutoIntake extends Command {
      * This is enough to reasonably quickly send a coral out in a controlled
      * manner
      */
-    elementLift.goToHeight(Constants.elementLiftConstants.humanPlayerStationHeight);
-    coralEE.setVoltage(.6);
+    elementLift.goToHeight(Constants.elementLiftConstants.humanPlayerStationHeight);  //Not sure if this is necessary, or if it gets in the way
+    coralEE.setVoltage(.8);
   }
 
   // Called once the command ends or is interrupted.
