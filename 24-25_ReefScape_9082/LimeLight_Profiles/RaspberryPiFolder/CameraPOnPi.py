@@ -55,7 +55,7 @@ def main():
         output_img = np.copy(input_img)
         output_img = cv2.line(output_img, (200,0),(200, 120),(255,0,0),5)
         output_img = cv2.line(output_img, (138,0), (138, 120), (255,0,0),5)
-        output_img = cv2.flip(output_img,0)
+        output_img = cv2.flip(cv2.flip(output_img,0),1)
         
         # Notify output of error and skip iteration 	
         if frame_time == 0:

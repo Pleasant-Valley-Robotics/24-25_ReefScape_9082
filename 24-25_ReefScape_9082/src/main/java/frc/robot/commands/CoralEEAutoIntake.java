@@ -31,7 +31,7 @@ public class CoralEEAutoIntake extends Command {
  * @param sensors - The Utility Sensors subsystem
  * @param coralEE - The Coral End Effector subsystem
  */
-  public CoralEEAutoIntake(UtilitySensors sensors, CoralEndEffector coralEE, ElementLift elementLift) {
+  public CoralEEAutoIntake(UtilitySensors sensors, CoralEndEffector coralEE) {
     /*
      * We feed in and use a UtilitySensors and CoralEndEffector class, which
      * control the sensors within our robot, and the subsystem that manipulates
@@ -39,12 +39,12 @@ public class CoralEEAutoIntake extends Command {
      */
     this.sensors = sensors;
     this.coralEE = coralEE;
-    this.elementLift = elementLift;
+    //this.elementLift = elementLift;
 
 
     addRequirements(sensors);
     addRequirements(coralEE);
-    addRequirements(elementLift);
+    //addRequirements(elementLift);
   }
 
   // Called when the command is initially scheduled.
@@ -54,7 +54,7 @@ public class CoralEEAutoIntake extends Command {
      * Here we want to reset our voltage to 0 to ensure that nothing is moving
      * through our end-effector
      */
-    elementLift.setVoltage(0);
+    //elementLift.setVoltage(0);
     coralEE.setVoltage(0);
   }
 
@@ -66,8 +66,8 @@ public class CoralEEAutoIntake extends Command {
      * This is enough to reasonably quickly send a coral out in a controlled
      * manner
      */
-    elementLift.goToHeight(Constants.elementLiftConstants.humanPlayerStationHeight);  //Not sure if this is necessary, or if it gets in the way
-    coralEE.setVoltage(.8);
+    //elementLift.goToHeight(Constants.elementLiftConstants.humanPlayerStationHeight);  //Not sure if this is necessary, or if it gets in the way
+    coralEE.setVoltage(0.8);
   }
 
   // Called once the command ends or is interrupted.

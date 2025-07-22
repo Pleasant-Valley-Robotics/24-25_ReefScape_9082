@@ -55,13 +55,13 @@ public class RobotContainer {
     // Path Follower
     private final SendableChooser<Command> autoChooser;
 
-    Command coralIntake = new CoralEEAutoIntake(utilitySensors, coralEE,elementLift);
+    Command coralIntake = new CoralEEAutoIntake(utilitySensors, coralEE);
     Command coralIntakeHeight = new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.humanPlayerStationHeight);
     SequentialCommandGroup coralIntakeButtonCommand = new SequentialCommandGroup(coralIntakeHeight, coralIntake);
     Command autoHeight = new CoralLevel2AutoHeight(elementLift, utilitySensors, coralEE);
 
     public RobotContainer() {
-        NamedCommands.registerCommand("CoralEEAutoIntake", new CoralEEAutoIntake(utilitySensors, coralEE, elementLift));
+        NamedCommands.registerCommand("CoralEEAutoIntake", new CoralEEAutoIntake(utilitySensors, coralEE));
         NamedCommands.registerCommand("CoralEEAutoOuttake", new CoralEEAutoOuttake(coralEE, 1.5, 3.0));
         NamedCommands.registerCommand("ElementLiftAutoHeightHumanPlayer", new ElementLiftAutoHeight(elementLift, Constants.elementLiftConstants.humanPlayerStationHeight));
         NamedCommands.registerCommand("ElementLiftAutoHeightL1", new ElementLiftAutoHeight(elementLift, 26.0));

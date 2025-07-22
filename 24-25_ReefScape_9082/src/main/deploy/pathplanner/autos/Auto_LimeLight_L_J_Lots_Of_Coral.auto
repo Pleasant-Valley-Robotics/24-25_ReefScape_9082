@@ -1,0 +1,69 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LimeLight_CoralJAutoL"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralLevel2AutoHeight"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CoralJToHumanPlayerA"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ElementLiftAutoHeightHumanPlayer"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CoralATeleOpA"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "CoralLevel2AutoHeight"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "CoralAToHumanPlayerA"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "CoralJ",
+  "choreoAuto": false
+}
